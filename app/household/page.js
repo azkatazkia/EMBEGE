@@ -26,11 +26,14 @@ export default function HouseholdPage() {
 
   async function handleCreate() {
     setError(null)
+    const { data: { user } } = await supabase.auth.getUser()
+    console.log('Current user:', user)
+  
     const code = Math.random().toString(36).substring(2, 8).toUpperCase()
 
     const { data: household, error: createError } = await supabase
       .from('households')
-      .insert({ name: householdName, invite_code: code })
+      .insert({ name: householdName, invite_code: code, created_by: user.id })
       .select()
       .single()
 
