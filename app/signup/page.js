@@ -1,53 +1,79 @@
-'use client'
-
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
+"use client";
 
 export default function SignupPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
-  const router = useRouter()
-  const supabase = createClient()
-
-  async function handleSignup() {
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) {
-      setError(error.message)
-    } else {
-      router.push('/dashboard')
-    }
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col gap-4 w-80">
-        <h1 className="text-2xl font-bold">Sign Up</h1>
-        <input
-          className="border p-2 rounded"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <input
-          className="border p-2 rounded"
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button
-          className="bg-black text-white p-2 rounded"
-          onClick={handleSignup}
-        >
-          Sign Up
-        </button>
-        <a href="/login" className="text-sm text-center text-gray-500">
-          Already have an account? Log in
-        </a>
-      </div>
-    </div>
-  )
+    <main className="min-h-screen grid grid-cols-2 bg-[#F5EEDC]">
+
+      {/* LEFT */}
+      <section className="flex flex-col justify-center px-16">
+
+        <h1 className="text-6xl font-bold leading-tight tracking-[-0.04em] max-w-xl">
+          Start with your household.
+        </h1>
+
+        <p className="mt-6 text-lg text-[#5C594F] max-w-lg leading-8">
+          Create an account, invite your family or roommates,
+          and keep everyone’s groceries in sync.
+        </p>
+
+      </section>
+
+      {/* RIGHT */}
+      <section className="flex items-center justify-center bg-[#FBF8EF]">
+
+        <div className="w-full max-w-[420px] rounded-[32px] bg-[#F5EEDC] p-9 shadow-sm">
+
+          <h2 className="text-4xl font-bold tracking-[-0.02em]">
+            Create your household account
+          </h2>
+
+          <p className="mt-3 text-[#5C594F]">
+            Set up your Embege profile.
+          </p>
+
+          <form
+            className="mt-8 grid gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              window.location.href = "/household";
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Name"
+              className="h-12 rounded-xl bg-[#DDD4BD] px-4 outline-none"
+            />
+
+            <input
+              type="email"
+              placeholder="Email"
+              className="h-12 rounded-xl bg-[#DDD4BD] px-4 outline-none"
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              className="h-12 rounded-xl bg-[#DDD4BD] px-4 outline-none"
+            />
+
+            <button
+              type="submit"
+              className="h-12 rounded-xl bg-[#6E8551] text-[#F5EEDC] font-semibold hover:bg-[#4A5C35] transition"
+            >
+              Sign Up
+            </button>
+
+          </form>
+
+          <p className="mt-6 text-sm text-center text-[#5C594F]">
+            Already have an account?{" "}
+            <a href="/login" className="font-bold text-[#4A5C35]">
+              Log in
+            </a>
+          </p>
+
+        </div>
+      </section>
+    </main>
+  );
 }
