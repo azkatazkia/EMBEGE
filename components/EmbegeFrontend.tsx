@@ -4,8 +4,7 @@ export default function EmbegeFrontend() {
   return (
     <div className="min-h-screen bg-[#F5EEDC] text-[#1F1F1B]">
       <section className="min-h-screen grid grid-cols-2">
-        
-        {/* LEFT */}
+
         <div className="flex flex-col justify-center px-16">
           <h1 className="text-6xl font-bold leading-tight tracking-[-0.04em] max-w-xl">
             Cook what you already have. Waste less together.
@@ -18,7 +17,7 @@ export default function EmbegeFrontend() {
           </p>
 
           <div className="mt-10 bg-[#EAE2CE] rounded-[32px] p-7 w-[520px] shadow-sm">
-            
+
             <div className="bg-white/30 rounded-3xl p-6 mb-6">
               <div className="text-sm font-semibold text-[#8A8275] mb-2">
                 ✦ Gibrain
@@ -34,7 +33,7 @@ export default function EmbegeFrontend() {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              
+
               <div className="bg-[#DDD4BD] rounded-2xl p-4">
                 <div className="text-4xl mb-3">🍤</div>
                 <div className="font-semibold">Shrimp</div>
@@ -66,11 +65,10 @@ export default function EmbegeFrontend() {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div className="flex items-center justify-center bg-[#FBF8EF]">
-          
+
           <div className="w-full max-w-[420px] rounded-[32px] bg-[#F5EEDC] p-9 shadow-sm">
-            
+
             <h2 className="text-4xl font-bold tracking-[-0.02em]">
               Welcome to Embege
             </h2>
@@ -80,7 +78,7 @@ export default function EmbegeFrontend() {
             </p>
 
             <div className="mt-8 grid gap-4">
-              
+
               <a
                 href="/signup"
                 className="flex h-12 items-center justify-center rounded-xl bg-[#6E8551] text-[#F5EEDC] font-semibold hover:bg-[#4A5C35] transition"
