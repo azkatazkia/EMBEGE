@@ -1,25 +1,15 @@
 import Link from "next/link";
 import { Logo } from "@/components/Icons";
 
+
 function AuthSideArt({ headline, sub }: { headline: string; sub: string }) {
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <Logo size={28} />
-        <span style={{ fontWeight: 700, fontSize: 18 }}>embege</span>
-      </div>
-
-      <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 28 }}>
-        <svg style={{ position: "absolute", right: -60, top: -80, opacity: 0.2 }} width="340" height="340" viewBox="0 0 340 340" fill="none">
-          <path d="M310 30 C220 60, 140 120, 70 230 C30 290, 80 320, 130 290" stroke="var(--leaf-400)" strokeWidth="2" strokeLinecap="round" fill="none"/>
-          <path d="M240 80 C220 70, 260 60, 264 88 C268 116, 230 102, 240 80 Z" fill="var(--leaf-400)" fillOpacity="0.5"/>
-          <path d="M180 150 C160 140, 200 130, 204 158 C208 186, 170 172, 180 150 Z" fill="var(--leaf-400)" fillOpacity="0.5"/>
-          <path d="M120 220 C100 210, 140 200, 144 228 C148 256, 110 242, 120 220 Z" fill="var(--leaf-400)" fillOpacity="0.5"/>
-        </svg>
-        <h2 style={{ fontSize: 36, lineHeight: 1.15, fontWeight: 700, margin: 0, letterSpacing: -0.5, maxWidth: 420, color: "var(--text-inverse)", position: "relative" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+        <h2 style={{ fontSize: 36, lineHeight: 1.15, fontWeight: 700, margin: 0, letterSpacing: -0.5, maxWidth: 420, color: "var(--text-inverse)" }}>
           {headline}
         </h2>
-        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, maxWidth: 380, color: "rgba(245,238,220,0.7)", position: "relative" }}>
+        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, maxWidth: 380, color: "rgba(245,238,220,0.7)" }}>
           {sub}
         </p>
       </div>
@@ -59,7 +49,7 @@ export default function WelcomePage() {
 
       <div style={{ padding: "40px 56px", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <Logo size={28} color="var(--leaf-800)" />
+          <Logo size={28} />
           <span style={{ fontWeight: 700, fontSize: 18 }}>embege</span>
         </div>
 
@@ -98,12 +88,8 @@ export default function WelcomePage() {
           </div>
         </div>
 
-        <p style={{ margin: 0, color: "var(--text-tertiary)", fontSize: 12 }}>
-          By continuing you agree to our terms — we don&apos;t sell your data.
-        </p>
       </div>
 
-      {/* Right decorative panel */}
       <div style={{
         position: "relative",
         background: "var(--leaf-800)",

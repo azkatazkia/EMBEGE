@@ -135,7 +135,6 @@ export default function SignupPage() {
         </div>
       </div>
 
-      {/* Right decorative panel */}
       <div style={{
         position: "relative", background: "var(--leaf-800)",
         margin: 20, marginLeft: 0, borderRadius: "var(--r-3xl)",
