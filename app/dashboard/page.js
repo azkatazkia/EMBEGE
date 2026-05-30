@@ -274,7 +274,6 @@ function ProgressColumn() {
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        {/* Impact card */}
         <div className="card-sunken" style={{ position: "relative", padding: 22, overflow: "hidden" }}>
           <svg style={{ position: "absolute", right: -10, top: 16, opacity: 0.5 }} width="90" height="100" viewBox="0 0 90 100" fill="none">
             <path d="M30 90 C20 70, 40 60, 30 40 C20 20, 40 10, 35 0" stroke="var(--leaf-800)" strokeWidth="1.5" strokeLinecap="round"/>
@@ -286,7 +285,6 @@ function ProgressColumn() {
           </div>
         </div>
 
-        {/* Top tier card */}
         <div style={{ position: "relative", padding: 22, background: "var(--leaf-800)", borderRadius: "var(--r-xl)", color: "var(--text-inverse)", overflow: "hidden" }}>
           <svg style={{ position: "absolute", right: -8, top: 6, opacity: 0.25 }} width="100" height="110" viewBox="0 0 100 110" fill="none">
             <path d="M90 10 C70 20, 50 40, 30 70 C20 85, 25 100, 40 95" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" fill="none"/>

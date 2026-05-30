@@ -103,7 +103,6 @@ export default function WelcomePage() {
         </p>
       </div>
 
-      {/* Right decorative panel */}
       <div style={{
         position: "relative",
         background: "var(--leaf-800)",
