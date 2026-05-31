@@ -65,7 +65,7 @@ export default function WelcomePage() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <Link href="/signup" className="btn btn-primary btn-lg btn-block">
-              Create your household
+              Create your account
             </Link>
             <Link href="/login" className="btn btn-secondary btn-lg btn-block">
               I already have an account
