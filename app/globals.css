@@ -167,7 +167,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
-.pill-urgent-filled { background: var(--leaf-800); color: var(--text-inverse); }
+.pill-urgent-filled { background: var(--status-urgent); color: var(--text-inverse); }
 .pill-urgent-soft   { background: rgba(196, 69, 54, 0.12); color: var(--status-urgent); }
 .pill-warning       { background: rgba(217, 142, 60, 0.12); color: var(--status-warning); }
 .pill-neutral       { background: var(--surface-sunken); color: var(--text-secondary); }
@@ -353,5 +353,19 @@ img { display: block; max-width: 100%; }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .welcome-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .green-panel {
+    display: none !important;
+  }
+  .left-panel {
+    padding: 40px 32px !important;
+    justify-content: center;
+    min-height: 100vh;
   }
 }

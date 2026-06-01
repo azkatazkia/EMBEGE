@@ -73,9 +73,12 @@ function ProductCard({ item, onClick }) {
   );
 }
 
-function ItemModal({ item, onClose, onDelete, onEdit }) {
+function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [usingUp, setUsingUp] = useState(false);
+  const [remaining, setRemaining] = useState("");
   const [form, setForm] = useState({
     name: item.name,
     quantity: item.quantity,
@@ -175,10 +178,72 @@ function ItemModal({ item, onClose, onDelete, onEdit }) {
               <button className="btn btn-secondary btn-lg" onClick={() => setEditing(true)}>
                 <I.pencil size={16} /> Edit
               </button>
-              <button className="btn btn-primary btn-lg" onClick={() => onDelete(item.id)}>
-                <I.check size={16} stroke="#fff" /> Used up
-              </button>
+
+              <div
+                style={{ position: "relative" }}
+                onMouseEnter={() => setHovering(true)}
+                onMouseLeave={() => setHovering(false)}
+              >
+                {hovering && (
+                  <div style={{
+                    position: "absolute", bottom: "100%", left: 0, right: 0,
+                    paddingBottom: 8,
+                    zIndex: 10,
+                  }}>
+                    <div style={{
+                      display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
+                      background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
+                      borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
+                    }}>
+                      <button
+                        className="btn btn-secondary btn-sm"
+                        style={{ flexDirection: "column", gap: 4, height: 56 }}
+                        onClick={() => setUsingUp(true)}
+                        title="Some left"
+                      >
+                        <I.clock size={18} />
+                        <span style={{ fontSize: 11 }}>Some left</span>
+                      </button>
+                      <button
+                        className="btn btn-primary btn-sm"
+                        style={{ flexDirection: "column", gap: 4, height: 56 }}
+                        onClick={() => onUseUp(item, null)}
+                        title="All used up"
+                      >
+                        <I.check size={18} stroke="#fff" />
+                        <span style={{ fontSize: 11 }}>All gone</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+                <button className="btn btn-primary btn-lg" style={{ width: "100%" }}>
+                  <I.check size={16} stroke="#fff" /> Used up
+                </button>
+              </div>
             </div>
+
+            {usingUp && (
+              <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                <span className="t-heading-sm">How much is left?</span>
+                <input
+                  className="input"
+                  placeholder={`e.g. ${item.quantity}`}
+                  value={remaining}
+                  onChange={e => setRemaining(e.target.value)}
+                  autoFocus
+                />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <button className="btn btn-secondary" onClick={() => { setUsingUp(false); setRemaining(""); }}>Cancel</button>
+                  <button
+                    className="btn btn-primary"
+                    disabled={!remaining.trim()}
+                    onClick={() => onUseUp(item, remaining.trim())}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -366,6 +431,28 @@ export default function InventoryPage() {
     await loadItems(householdId, userId);
   }
 
+  async function handleUseUp(item, remaining) {
+    const fullyUsed = remaining === null; 
+  
+    await supabase.from("consumption_log").insert({
+      household_id: householdId,
+      food_item_id: item.id,
+      food_item_name: item.name,
+      original_quantity: item.quantity,
+      remaining_quantity: remaining,
+      consumed_by: userId,
+    });
+  
+    if (fullyUsed) {
+      await supabase.from("food_items").delete().eq("id", item.id);
+    } else {
+      await supabase.from("food_items").update({ quantity: remaining }).eq("id", item.id);
+    }
+  
+    setSelectedItem(null);
+    await loadItems(householdId, userId);
+  }
+
   const locations = ["All", "Fridge", "Freezer", "Pantry"];
 
   const filtered = items.filter((it) => {
@@ -483,7 +570,7 @@ export default function InventoryPage() {
       )}
 
       {selectedItem && (
-        <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} onDelete={handleDelete} onEdit={handleEdit} />
+        <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} onDelete={handleDelete} onEdit={handleEdit}  onUseUp={handleUseUp} />
       )}
       {showAddForm && (
         <AddItemModal onClose={() => setShowAddForm(false)} onAdd={handleAdd} saving={saving} />

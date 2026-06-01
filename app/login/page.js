@@ -79,7 +79,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{
+    <div className="welcome-grid" style={{
       minHeight: "100vh", display: "grid",
       gridTemplateColumns: "minmax(0, 480px) 1fr",
       background: "var(--surface-canvas)",
@@ -126,7 +126,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div style={{
+      <div className="green-panel" style={{
         position: "relative", background: "var(--leaf-800)",
         margin: 20, marginLeft: 0, borderRadius: "var(--r-3xl)",
         overflow: "hidden", padding: 48,
