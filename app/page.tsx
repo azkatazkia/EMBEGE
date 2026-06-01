@@ -40,14 +40,15 @@ function AuthSideArt({ headline, sub }: { headline: string; sub: string }) {
 
 export default function WelcomePage() {
   return (
-    <div style={{
+    <div className="welcome-grid" style={{
       minHeight: "100vh",
       display: "grid",
       gridTemplateColumns: "minmax(0, 480px) 1fr",
       background: "var(--surface-canvas)",
     }}>
+      
 
-      <div style={{ padding: "40px 56px", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div className="left-panel" style={{ padding: "40px 56px", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Logo size={28} />
           <span style={{ fontWeight: 700, fontSize: 18 }}>embege</span>
@@ -90,7 +91,7 @@ export default function WelcomePage() {
 
       </div>
 
-      <div style={{
+      <div className="green-panel" style={{
         position: "relative",
         background: "var(--leaf-800)",
         margin: 20, marginLeft: 0,
@@ -105,15 +106,6 @@ export default function WelcomePage() {
           sub="embege keeps track of what's in your kitchen, who bought it, and what to cook before it goes bad — together with the people you live with."
         />
       </div>
-
-      <style>{`
-        @media (max-width: 900px) {
-          div[style*="grid-template-columns: minmax(0, 480px)"] {
-            grid-template-columns: 1fr;
-          }
-          div[style*="margin: 20px"] { display: none; }
-        }
-      `}</style>
     </div>
   );
 }
