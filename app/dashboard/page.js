@@ -53,7 +53,7 @@ function EaiHero({ userName, expiringSoon }) {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    router.push("/tell-eai");
+    router.push("/eai");
   };
 
   return (
@@ -95,7 +95,7 @@ function EaiHero({ userName, expiringSoon }) {
           value={text} onChange={(e) => setText(e.target.value)}
           className="input-pill"
           style={{ paddingRight: 56, background: "var(--surface-sunken)" }}
-          placeholder="Ask a follow-up"
+          placeholder="Ask a follow-up — e.g. what about dinner for 2?"
         />
         <button type="submit" aria-label="Send to e-ai" style={{
           position: "absolute", right: 4, top: 4, bottom: 4,
@@ -263,6 +263,10 @@ function ProgressColumn() {
         background: "var(--leaf-400)", borderRadius: "var(--r-xl)",
         padding: "22px 24px", color: "var(--leaf-900)", overflow: "hidden",
       }}>
+        <svg style={{ position: "absolute", right: -8, top: -10, opacity: 0.35 }} width="140" height="160" viewBox="0 0 140 160" fill="none">
+          <path d="M120 10 C90 30, 110 70, 70 90 C30 110, 50 140, 20 150" stroke="var(--leaf-900)" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M100 25 C95 20, 105 18, 108 25 C111 32, 100 32, 100 25 Z" fill="var(--leaf-900)" fillOpacity="0.55"/>
+        </svg>
         <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4, position: "relative" }}>You have saved $182</div>
         <div style={{ fontSize: 13, color: "rgba(46,59,31,0.7)", maxWidth: 280, position: "relative" }}>
           That's a family dinner at a decent restaurant, paid for by not wasting food.
@@ -271,6 +275,10 @@ function ProgressColumn() {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div className="card-sunken" style={{ position: "relative", padding: 22, overflow: "hidden" }}>
+          <svg style={{ position: "absolute", right: -10, top: 16, opacity: 0.5 }} width="90" height="100" viewBox="0 0 90 100" fill="none">
+            <path d="M30 90 C20 70, 40 60, 30 40 C20 20, 40 10, 35 0" stroke="var(--leaf-800)" strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M55 90 C45 70, 65 60, 55 40 C45 20, 65 10, 60 0" stroke="var(--leaf-800)" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
           <div style={{ marginTop: 28, color: "var(--leaf-800)", position: "relative" }}>
             <div style={{ fontWeight: 700, fontSize: 17, lineHeight: 1.2, marginBottom: 6 }}>Small habit,<br/>real impact.</div>
             <div style={{ fontSize: 12, color: "rgba(74,92,53,0.7)", lineHeight: 1.4 }}>You prevented 2.4kg of CO₂.</div>
@@ -278,6 +286,10 @@ function ProgressColumn() {
         </div>
 
         <div style={{ position: "relative", padding: 22, background: "var(--leaf-800)", borderRadius: "var(--r-xl)", color: "var(--text-inverse)", overflow: "hidden" }}>
+          <svg style={{ position: "absolute", right: -8, top: 6, opacity: 0.25 }} width="100" height="110" viewBox="0 0 100 110" fill="none">
+            <path d="M90 10 C70 20, 50 40, 30 70 C20 85, 25 100, 40 95" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+            <path d="M70 30 C65 25, 80 20, 82 32 C84 44, 70 38, 70 30 Z" fill="#fff" fillOpacity="0.4"/>
+          </svg>
           <div style={{ marginTop: 28, position: "relative" }}>
             <div style={{ fontWeight: 700, fontSize: 17, marginBottom: 6 }}>You're in the top tier!</div>
             <div style={{ fontSize: 12, color: "rgba(245,238,220,0.55)", lineHeight: 1.4 }}>You waste 35% less than average.</div>
@@ -357,6 +369,9 @@ export default function DashboardPage() {
           <button className="btn btn-ghost btn-sm" style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--surface-canvas)" }} aria-label="Notifications">
             <I.bell size={18} />
           </button>
+          <Link href="/eai" className="btn btn-primary">
+            <I.sparkle size={16} stroke="#fff" /> Ask e-ai
+          </Link>
         </div>
       </div>
 

@@ -6,17 +6,11 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
+import * as emoji from 'node-emoji'
 
 function getFoodEmoji(name) {
-  const map = {
-    shrimp: "🦐", milk: "🥛", egg: "🥚", cucumber: "🥒",
-    tomato: "🍅", spinach: "🥬", chicken: "🍗", rice: "🍚",
-    beef: "🥩", fish: "🐟", carrot: "🥕", apple: "🍎",
-    banana: "🍌", bread: "🍞", cheese: "🧀", pasta: "🍝",
-    peas: "🟢", onion: "🧅", soy: "🥢",
-  };
-  const key = name.toLowerCase();
-  return Object.entries(map).find(([k]) => key.includes(k))?.[1] ?? "🥫";
+  const results = emoji.search(name.toLowerCase())
+  return results.length > 0 ? results[0].emoji : '🍽️'
 }
 
 function daysUntilExpiry(dateStr) {
@@ -27,7 +21,8 @@ function daysUntilExpiry(dateStr) {
 }
 
 function StatusPill({ daysLeft }) {
-  if (daysLeft <= 0) return <span className="pill pill-urgent-filled">Expires today</span>;
+  if (daysLeft == 0) return <span className="pill pill-urgent-filled">Expires today</span>;
+  if (daysLeft < 0) return <span className="pill pill-urgent-soft">Overdue</span>;
   if (daysLeft <= 3) return <span className="pill pill-warning">{daysLeft} {daysLeft === 1 ? "day" : "days"} left</span>;
   return <span className="pill pill-neutral">{daysLeft} days left</span>;
 }
@@ -80,7 +75,7 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
   const [usingUp, setUsingUp] = useState(false);
   const [remaining, setRemaining] = useState("");
   const [form, setForm] = useState({
-    name: item.name,
+    name: item.name, 
     quantity: item.quantity,
     expiry_date: item.expiry_date?.slice(0, 10) ?? "",
     storage_location: item.storage_location,
@@ -180,47 +175,51 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
               </button>
 
               <div
-                style={{ position: "relative" }}
-                onMouseEnter={() => setHovering(true)}
-                onMouseLeave={() => setHovering(false)}
-              >
-                {hovering && (
-                  <div style={{
-                    position: "absolute", bottom: "100%", left: 0, right: 0,
-                    paddingBottom: 8,
-                    zIndex: 10,
-                  }}>
-                    <div style={{
-                      display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
-                      background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
-                      borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
-                    }}>
-                      <button
-                        className="btn btn-secondary btn-sm"
-                        style={{ flexDirection: "column", gap: 4, height: 56 }}
-                        onClick={() => setUsingUp(true)}
-                        title="Some left"
-                      >
-                        <I.clock size={18} />
-                        <span style={{ fontSize: 11 }}>Some left</span>
-                      </button>
-                      <button
-                        className="btn btn-primary btn-sm"
-                        style={{ flexDirection: "column", gap: 4, height: 56 }}
-                        onClick={() => onUseUp(item, null)}
-                        title="All used up"
-                      >
-                        <I.check size={18} stroke="#fff" />
-                        <span style={{ fontSize: 11 }}>All gone</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                <button className="btn btn-primary btn-lg" style={{ width: "100%" }}>
-                  <I.check size={16} stroke="#fff" /> Used up
-                </button>
+  style={{ position: "relative" }}
+  onMouseEnter={() => setHovering(true)}
+  onMouseLeave={() => setHovering(false)}
+>
+  {hovering && (
+    <div style={{
+      position: "absolute", bottom: 0, left: 0, right: 0,
+      paddingBottom: "calc(100% + 8px)", 
+      zIndex: 10,
+    }}>
+      <div style={{
+        position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
+        display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
+        background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
+        borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
+      }}>
+        {/* Some left — LEFT */}
+        <button
+          className="btn btn-secondary btn-sm"
+          style={{ flexDirection: "column", gap: 4, height: 56 }}
+          onClick={() => setUsingUp(true)}
+          title="Some left"
+        >
+          <I.clock size={18} />
+          <span style={{ fontSize: 11 }}>Some left</span>
+        </button>
+
+        <button
+          className="btn btn-primary btn-sm"
+          style={{ flexDirection: "column", gap: 4, height: 56 }}
+          onClick={() => onUseUp(item, null)}
+          title="All used up"
+        >
+          <I.check size={18} stroke="#fff" />
+          <span style={{ fontSize: 11 }}>All gone</span>
+        </button>
+      </div>
+    </div>
+  )}
+
+  <button className="btn btn-primary btn-lg" style={{ width: "100%" }}>
+    <I.check size={16} stroke="#fff" /> Used up
+  </button>
+</div>
               </div>
-            </div>
 
             {usingUp && (
               <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -500,7 +499,7 @@ export default function InventoryPage() {
       <div style={{ marginBottom: 18 }}>
         <h2 className="t-heading-lg" style={{ margin: "0 0 10px" }}>Add to Inventory</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-          <ActionChip icon={I.sparkle} label="Tell e-ai" onClick={() => router.push("/tell-eai")} />
+          <ActionChip icon={I.sparkle} label="Tell e-ai" onClick={() => router.push("/eai")} />
           <ActionChip icon={I.pencil} label="Manual entry" onClick={() => setShowAddForm(true)} />
           <ActionChip icon={I.receipt} label="Scan receipt" onClick={() => alert("Receipt scan — coming soon.")} />
           <ActionChip icon={I.camera} label="Photo of fridge" onClick={() => alert("Photo scan — coming soon.")} />
