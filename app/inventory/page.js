@@ -6,12 +6,8 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
-import * as emoji from 'node-emoji'
-
-function getFoodEmoji(name) {
-  const results = emoji.search(name.toLowerCase())
-  return results.length > 0 ? results[0].emoji : '🍽️'
-}
+import ReceiptScanner from "@/components/ReceiptScanner"
+import { getFoodEmoji } from "@/lib/foodIcon"
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -129,7 +125,7 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <span className="input-label">Storage location</span>
-              <select className="input" style={{ height: 44 }} value={form.storage_location} onChange={e => setForm(f => ({ ...f, storage_location: e.target.value }))}>
+              <select className="input" style={{ height: 44, appearance: "none"}} value={form.storage_location} onChange={e => setForm(f => ({ ...f, storage_location: e.target.value }))}>
                 <option>Fridge</option>
                 <option>Freezer</option>
                 <option>Pantry</option>
@@ -191,7 +187,6 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
         background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
         borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
       }}>
-        {/* Some left — LEFT */}
         <button
           className="btn btn-secondary btn-sm"
           style={{ flexDirection: "column", gap: 4, height: 56 }}
@@ -333,7 +328,8 @@ export default function InventoryPage() {
   const [activeLocation, setActiveLocation] = useState("All");
   const [selectedItem, setSelectedItem] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [displayName, setDisplayName] = useState("B");
+  const [displayName, setDisplayName] = useState("?");
+  const [scannerOpen, setScannerOpen] = useState(false)
 
   useEffect(() => {
     async function init() {
@@ -501,7 +497,7 @@ export default function InventoryPage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           <ActionChip icon={I.sparkle} label="Tell e-ai" onClick={() => router.push("/eai")} />
           <ActionChip icon={I.pencil} label="Manual entry" onClick={() => setShowAddForm(true)} />
-          <ActionChip icon={I.receipt} label="Scan receipt" onClick={() => alert("Receipt scan — coming soon.")} />
+          <ActionChip icon={I.receipt} label="Scan receipt" onClick={() => setScannerOpen(true)} />
           <ActionChip icon={I.camera} label="Photo of fridge" onClick={() => alert("Photo scan — coming soon.")} />
         </div>
       </div>
@@ -573,6 +569,27 @@ export default function InventoryPage() {
       )}
       {showAddForm && (
         <AddItemModal onClose={() => setShowAddForm(false)} onAdd={handleAdd} saving={saving} />
+      )}
+
+      {scannerOpen && (
+              <ReceiptScanner
+                isOpen={scannerOpen}
+                onClose={() => setScannerOpen(false)}
+                onItemsConfirmed={async (items) => {
+                  setScannerOpen(false);
+                  await supabase.from("food_items").insert(
+                      items.map(item => ({
+                          household_id: householdId,
+                          name: item.name,
+                          quantity: item.quantity,
+                          expiry_date: item.expiry_date || null,
+                          storage_location: item.storage_location,
+                          added_by: userId,
+                      }))
+                  );
+                  await loadItems(householdId, userId);
+              }}
+              />
       )}
     </AppShell>
   );

@@ -5,11 +5,10 @@ import {
   Search, Plus, Filter, Bell, ArrowUpRight, ArrowRight, ArrowLeft,
   ChevronRight, ChevronDown, Send, Scan, Pencil, Trash2,
   Refrigerator, Snowflake, LayoutGrid, Camera, Check, Clock,
-  Leaf, X, Copy, LogOut, Receipt, Soup,
+  Leaf, X, Copy, LogOut, Receipt, Soup, FileUp
 } from "lucide-react";
 
-// Maps the legacy `stroke` prop to Lucide's `color` prop so
-// existing call sites like <I.bell stroke="#fff" /> keep working.
+
 function wrap(LucideIcon) {
   return function WrappedIcon({ stroke, ...props }) {
     return <LucideIcon color={stroke} {...props} />;
@@ -48,6 +47,7 @@ export const I = {
   logout:       wrap(LogOut),
   receipt:      wrap(Receipt),
   bowl:         wrap(Soup),
+  upload:       wrap(FileUp)
 };
 
 export function Logo({ size = 28, invert = false }) {
