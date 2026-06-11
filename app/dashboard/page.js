@@ -56,11 +56,9 @@ function EaiHero({ userName, expiringSoon }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <span style={{
           width: 30, height: 30, borderRadius: "50%",
-          background: "radial-gradient(circle at 30% 30%, var(--leaf-400) 0%, var(--leaf-600) 55%, var(--leaf-800) 100%)",
           display: "inline-flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 0 0 2px rgba(255,255,255,0.6)", flexShrink: 0,
         }}>
-          <I.sparkle size={16} stroke="#fff" strokeWidth={1.8} />
+          <img src="/eai-logo-green.png" width={30} height={15} alt="description"/>
         </span>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
           <span className="t-heading-sm" style={{ color: "var(--text-primary)" }}>e-ai</span>

@@ -47,7 +47,8 @@ export const I = {
   logout:       wrap(LogOut),
   receipt:      wrap(Receipt),
   bowl:         wrap(Soup),
-  upload:       wrap(FileUp)
+  upload:       wrap(FileUp),
+  eai:          () => <img src="/eai-logo.png" alt="e-ai" className="w-6 h-6" />
 };
 
 export function Logo({ size = 28, invert = false }) {
