@@ -6,18 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
-
-function getFoodEmoji(name) {
-  const map = {
-    shrimp: "🦐", milk: "🥛", egg: "🥚", cucumber: "🥒",
-    tomato: "🍅", spinach: "🥬", chicken: "🍗", rice: "🍚",
-    beef: "🥩", fish: "🐟", carrot: "🥕", apple: "🍎",
-    banana: "🍌", bread: "🍞", cheese: "🧀", pasta: "🍝",
-    peas: "🟢", onion: "🧅",
-  };
-  const key = name.toLowerCase();
-  return Object.entries(map).find(([k]) => key.includes(k))?.[1] ?? "🍽️";
-}
+import { getFoodEmoji } from "@/lib/foodIcon";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
