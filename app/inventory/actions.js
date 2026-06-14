@@ -79,3 +79,26 @@ export async function deleteItem(id) {
 
   return { error: error?.message ?? null }
 }
+
+export async function markItemsUsed(itemIds) {
+  const supabase = await createServerSupabaseClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not logged in' }
+
+  const { data: member } = await supabase
+    .from('household_members')
+    .select('household_id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (!member) return { error: 'No household found' }
+
+  const { error } = await supabase
+    .from('food_items')
+    .delete()
+    .in('id', itemIds)
+    .eq('household_id', member.household_id)
+
+  return { error: error?.message ?? null }
+}
