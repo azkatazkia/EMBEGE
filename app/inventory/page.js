@@ -7,7 +7,8 @@ import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
 import ReceiptScanner from "@/components/ReceiptScanner"
-import { getFoodEmoji } from "@/lib/foodIcon"
+import { getFoodEmoji } from "@/lib/foodIcon";
+import { getSuggestedExpiry } from "@/lib/consumptionRate";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -246,6 +247,20 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 }
 
 function AddItemModal({ onClose, onAdd, saving }) {
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("Fridge");
+  const [suggestedExpiry, setSuggestedExpiry] = useState("");
+  const [isSuggested, setIsSuggested] = useState(false);
+
+  useEffect(() => {
+    if (!name.trim()) return;
+    const suggested = getSuggestedExpiry(name, location);
+    if (suggested) {
+      setSuggestedExpiry(suggested);
+      setIsSuggested(true);
+    }
+  }, [name, location]);
+
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }}>
       <div style={{ width: "min(560px, calc(100vw - 40px))", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "40px", boxShadow: "var(--e-4)" }}>
@@ -257,7 +272,7 @@ function AddItemModal({ onClose, onAdd, saving }) {
         <form onSubmit={onAdd} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Food name</span>
-            <input name="name" required className="input" placeholder="e.g. Milk, Chicken thighs" />
+            <input name="name" required className="input" placeholder="e.g. Milk, Chicken thighs" value={name} onChange={e => setName(e.target.value)} />
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Quantity</span>
@@ -265,11 +280,16 @@ function AddItemModal({ onClose, onAdd, saving }) {
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Expiry date</span>
-            <input name="expiry_date" type="date" required className="input" />
+            <input name="expiry_date" type="date" required className="input" value={suggestedExpiry} onChange={e => { setSuggestedExpiry(e.target.value); setIsSuggested(false); }} />
+            {isSuggested && (
+              <span style={{ fontSize: 12, color: "var(--leaf-600)", marginTop: -2 }}>
+                ✦ Suggested based on food type — you can change it
+              </span>
+            )}
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Storage location</span>
-            <select name="storage_location" className="input" style={{ height: 44 }}>
+            <select name="storage_location" className="input" style={{ height: 44 }} value={location} onChange={e => setLocation(e.target.value)}>
               <option>Fridge</option>
               <option>Freezer</option>
               <option>Pantry</option>
@@ -329,7 +349,7 @@ export default function InventoryPage() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [displayName, setDisplayName] = useState("?");
-  const [scannerOpen, setScannerOpen] = useState(false)
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -436,6 +456,7 @@ export default function InventoryPage() {
       original_quantity: item.quantity,
       remaining_quantity: remaining,
       consumed_by: userId,
+      item_added_at: item.created_at,
     });
   
     if (fullyUsed) {

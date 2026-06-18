@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { id: "recipes",    label: "Recipes",   Icon: I.utensils, href: "/recipes" },
   { id: "groceries",  label: "Grocery",   Icon: I.cart,     href: "/groceries" },
   { id: "household",  label: "Household", Icon: I.users,    href: "/household" },
-  { id: "eai",        label: "e-ai",      Icon: I.sparkle,  href: "/eai" },
+  { id: "eai",        label: "e-ai",      Icon: I.eai,      href: "/eai" },
 ];
 
 export function Sidebar({ userInitial = "B", userName = "You" }) {
@@ -169,7 +169,7 @@ export function BottomNav() {
         })}
       </nav>
       <Link href="/eai" className="bn-fab" aria-label="Ask e-ai">
-        <I.sparkle size={24} stroke="#fff" strokeWidth={1.8} />
+        <img src="/eai-logo.png" width={30} height={15} alt="e-ai logo"/>
       </Link>
     </>
   );
