@@ -44,11 +44,10 @@ export default function ReceiptScanner( {isOpen, onClose, onItemsConfirmed}) {
         let worker;
     
         try {
-            const fileURL = URL.createObjectURL(file);
             worker = await createWorker('eng');
-    
+
             const result = await withTimeout(
-                worker.recognize(fileURL),
+                worker.recognize(file),
                 20000,
                 "This is taking too long. Try a clearer photo of a receipt."
             );
@@ -70,24 +69,24 @@ export default function ReceiptScanner( {isOpen, onClose, onItemsConfirmed}) {
             }
 
             const data = await response.json();
-    
+
             if (data.error === 'no_items_found') {
                 throw new Error("That doesn't look like a receipt. Try a clearer photo of a grocery receipt.");
             }
             if (data.error) {
                 throw new Error('Something went wrong reading your receipt. Please try again.');
             }
-    
+
             let items;
             try {
                 items = JSON.parse(data.items);
             } catch {
                 throw new Error('Could not read the items from your receipt. Try a clearer photo.');
             }
-    
+
             setScannedItems(items);
             setStep(3);
-    
+
         } catch (err) {
             console.error('Receipt scan error:', err);
             setError(err.message || 'Something went wrong. Please try again.');

@@ -373,10 +373,10 @@ export default function InventoryPage() {
     init();
   }, []);
 
-  async function loadItems(hhId, uid) {
+  async function loadItems(hhId, uid, silent = false) {
     const hid = hhId ?? householdId;
     if (!hid) return;
-    setLoading(true);
+    if (!silent) setLoading(true);
 
     const { data: foodItems, error: itemsErr } = await supabase
       .from("food_items")
@@ -403,6 +403,26 @@ export default function InventoryPage() {
     setLoading(false);
   }
 
+  useEffect(() => {
+    if (!householdId || !userId) return;
+    const hid = householdId;
+    const uid = userId;
+
+    const channel = supabase
+      .channel(`food_items:${hid}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "food_items",
+        filter: `household_id=eq.${hid}`,
+      }, () => {
+        loadItems(hid, uid, true);
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [householdId, userId]);
+
   async function handleAdd(e) {
     e.preventDefault();
     if (!householdId || !userId) return;
@@ -424,7 +444,6 @@ export default function InventoryPage() {
 
     setShowAddForm(false);
     e.target.reset();
-    await loadItems(householdId, userId);
   }
 
   async function handleEdit(id, form) {
@@ -435,7 +454,6 @@ export default function InventoryPage() {
       storage_location: form.storage_location,
     }).eq("id", id);
     if (editErr) { setError(editErr.message); return; }
-    await loadItems(householdId, userId);
     setSelectedItem(prev => prev ? { ...prev, ...form } : null);
   }
 
@@ -443,7 +461,6 @@ export default function InventoryPage() {
     const { error: delErr } = await supabase.from("food_items").delete().eq("id", id);
     if (delErr) { setError(delErr.message); return; }
     setSelectedItem(null);
-    await loadItems(householdId, userId);
   }
 
   async function handleUseUp(item, remaining) {
@@ -466,7 +483,6 @@ export default function InventoryPage() {
     }
   
     setSelectedItem(null);
-    await loadItems(householdId, userId);
   }
 
   const locations = ["All", "Fridge", "Freezer", "Pantry"];
@@ -608,7 +624,6 @@ export default function InventoryPage() {
                           added_by: userId,
                       }))
                   );
-                  await loadItems(householdId, userId);
               }}
               />
       )}
