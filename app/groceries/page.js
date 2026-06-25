@@ -135,9 +135,28 @@ export default function GroceriesPage() {
     init();
   }, []);
 
-  async function loadItems(hhId) {
-    setLoading(true);
+  useEffect(() => {
+    if (!householdId) return;
+    const hid = householdId;
+
+    const channel = supabase
+      .channel(`grocery_list:${hid}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "grocery_list",
+        filter: `household_id=eq.${hid}`,
+      }, () => {
+        loadItems(hid, true);
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [householdId]);
+
+  async function loadItems(hhId, silent = false) {
     const hid = hhId ?? householdId;
+    if (!silent) setLoading(true);
 
     const { data: groceries, error: err } = await supabase
       .from("grocery_list")
@@ -174,24 +193,20 @@ export default function GroceriesPage() {
     setAdding(false);
     if (err) { setError(err.message); return; }
     setNewItem("");
-    await loadItems(householdId);
   }
 
   async function handleToggle(id, currentChecked) {
     await supabase.from("grocery_list").update({ is_checked: !currentChecked }).eq("id", id);
-    setItems(prev => prev.map(g => g.id === id ? { ...g, is_checked: !currentChecked } : g));
   }
 
   async function handleEditItem(id, newName) {
     const { error: err } = await supabase.from("grocery_list").update({ item_name: newName }).eq("id", id);
     if (err) { setError(err.message); return; }
-    setItems(prev => prev.map(g => g.id === id ? { ...g, item_name: newName } : g));
   }
 
   async function handleDeleteItem(id) {
     const { error: err } = await supabase.from("grocery_list").delete().eq("id", id);
     if (err) { setError(err.message); return; }
-    setItems(prev => prev.filter(g => g.id !== id));
   }
 
   const filtered = items.filter(g =>
