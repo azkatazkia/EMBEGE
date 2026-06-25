@@ -7,6 +7,7 @@ export default function ReceiptScanner( {isOpen, onClose, onItemsConfirmed}) {
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [scannedItems, setScannedItems] = useState([]);
+    const [error, setError] = useState(null);
 
     const fileInputRef = useRef(null);
     const cameraInputRef = useRef(null);
@@ -18,31 +19,85 @@ export default function ReceiptScanner( {isOpen, onClose, onItemsConfirmed}) {
     function handleFile(e) {
         const file = e.target.files[0];
         if (!file) return;
-        processImage(file);
+        processImage(file).catch((err) => {
+            console.error('Unhandled receipt scan error:', err);
+            setError(err.message || 'Something went wrong. Please try again.');
+            setStep(1);
+            setIsLoading(false);
+        });
     }
 
+    function withTimeout(promise, ms, message) {
+        return Promise.race([
+            promise,
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error(message)), ms)
+            ),
+        ]);
+    }
+    
     async function processImage(file) {
         setStep(2);
         setIsLoading(true);
+        setError(null);
+    
+        let worker;
+    
+        try {
+            const fileURL = URL.createObjectURL(file);
+            worker = await createWorker('eng');
+    
+            const result = await withTimeout(
+                worker.recognize(fileURL),
+                20000,
+                "This is taking too long. Try a clearer photo of a receipt."
+            );
+    
+            const extractedText = result.data.text.trim();
+    
+            const response = await withTimeout(
+                fetch('/api/parse-receipt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: extractedText })
+                }),
+                15000,
+                "The server took too long to respond. Please try again."
+            );
+    
+            if (!response.ok) {
+                throw new Error('Server error while parsing receipt');
+            }
 
-        const fileURL = URL.createObjectURL(file);
-        const worker = await createWorker('eng');
-        const result = await worker.recognize(fileURL);
-
-        const response = await fetch('/api/parse-receipt', {
-            method: 'POST',
-            headers: { 'Content-Type' : 'application/json' },
-            body: JSON.stringify({ text: result.data.text })
-        })
-
-        const data = await response.json();
-        const items = JSON.parse(data.items);
-        
-        console.log(data); 
-        setScannedItems(items);
-        await worker.terminate();
-        setIsLoading(false);
-        setStep(3);
+            const data = await response.json();
+    
+            if (data.error === 'no_items_found') {
+                throw new Error("That doesn't look like a receipt. Try a clearer photo of a grocery receipt.");
+            }
+            if (data.error) {
+                throw new Error('Something went wrong reading your receipt. Please try again.');
+            }
+    
+            let items;
+            try {
+                items = JSON.parse(data.items);
+            } catch {
+                throw new Error('Could not read the items from your receipt. Try a clearer photo.');
+            }
+    
+            setScannedItems(items);
+            setStep(3);
+    
+        } catch (err) {
+            console.error('Receipt scan error:', err);
+            setError(err.message || 'Something went wrong. Please try again.');
+            setStep(1);
+        } finally {
+            if (worker) {
+                await worker.terminate();
+            }
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -73,6 +128,25 @@ export default function ReceiptScanner( {isOpen, onClose, onItemsConfirmed}) {
                     ref={cameraInputRef}
                     onChange={handleFile}
                 />
+
+                {error && (
+                    <div style={{ 
+                        background: "rgba(196,69,54,0.08)", 
+                        color: "var(--status-urgent)", 
+                        padding: "12px 16px", 
+                        borderRadius: 12, 
+                        fontSize: 13,
+                        marginBottom: 16
+                    }}>
+                        {error}
+                        <button 
+                            onClick={() => setError(null)} 
+                            style={{ marginLeft: 12, color: "inherit", fontWeight: 600 }}
+                        >
+                            Dismiss
+                        </button>
+                    </div>
+                )}
 
                 {step == 1 && (
                     <div style={{ display: "flex", gap:12 }}>
