@@ -193,10 +193,12 @@ export default function GroceriesPage() {
     setAdding(false);
     if (err) { setError(err.message); return; }
     setNewItem("");
+    await loadItems(householdId, true);
   }
 
   async function handleToggle(id, currentChecked) {
     await supabase.from("grocery_list").update({ is_checked: !currentChecked }).eq("id", id);
+    await loadItems(householdId, true);
   }
 
   async function handleEditItem(id, newName) {
