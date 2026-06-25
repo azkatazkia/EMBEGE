@@ -88,8 +88,8 @@ export async function GET() {
       const params = new URLSearchParams({
         ingredients: ingredients.join(','),
         number: '6',
-        ranking: '1',       
-        ignorePantry: 'true',
+        ranking: '1',
+        ignorePantry: 'false',
         apiKey: spoonacularKey,
       })
 
@@ -110,31 +110,37 @@ export async function GET() {
       const missedNames = (recipe.missedIngredients ?? []).map(i => i.name)
 
       const dietaryNote = restrictions.length > 0
-        ? `The household has the following dietary restrictions: ${restrictions.join(', ')}. Make sure all steps respect these restrictions.`
+        ? `Dietary restrictions: ${restrictions.join(', ')}. Respect these in all steps.`
         : ''
 
-      const prompt = `You are a home cooking assistant. Generate clear, practical step-by-step cooking instructions for the following recipe.
+      const prompt = `You are a home cooking assistant. For the recipe "${recipe.title}", generate:
+    1. The COMPLETE list of all ingredients needed (with amounts)
+    2. Step-by-step cooking instructions
 
-Recipe name: ${recipe.title}
+    The household pantry currently has: ${pantryItems.join(', ')}
 
-Ingredients available in the household pantry: ${usedNames.join(', ')}
-Ingredients not in pantry (user needs to buy or substitute): ${missedNames.join(', ')}
-Full household pantry for context: ${pantryItems.join(', ')}
+    ${dietaryNote}
 
-${dietaryNote}
+    For each ingredient, mark "inStock": true ONLY if it appears in this pantry list: ${pantryItems.join(', ')}
+    Otherwise mark "inStock": false.
 
-Return ONLY a JSON object in this exact format, with no extra text before or after:
-{
-  "readyInMinutes": <estimated cooking time as a number>,
-  "servings": <number of servings as a number>,
-  "steps": [
-    "Step 1 description",
-    "Step 2 description",
-    "Step 3 description"
-  ]
-}
+    Return ONLY a JSON object in this exact format, no extra text:
+    {
+      "readyInMinutes": <number>,
+      "servings": <number>,
+      "ingredients": [
+        { "name": "flour", "amount": "1.5 cups", "inStock": false },
+        { "name": "eggs", "amount": "2 whole", "inStock": true },
+        { "name": "milk", "amount": "0.5 cup", "inStock": true }
+      ],
+      "steps": [
+        "Step 1 description",
+        "Step 2 description"
+      ]
+    }
 
-Write 5 to 8 clear steps. Each step should be one sentence. Use only the available ingredients where possible. Do not include markdown, code fences, or any text outside the JSON object.`
+    Include ALL ingredients the recipe needs, even common pantry staples like flour, salt, butter, sugar.
+    Write 5 to 8 steps. No markdown, no text outside the JSON.`
 
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -150,10 +156,7 @@ Write 5 to 8 clear steps. Each step should be one sentence. Use only the availab
         }),
       })
 
-      if (!res.ok) {
-        console.error('Claude API error:', res.status)
-        return { steps: [], readyInMinutes: null, servings: null }
-      }
+      if (!res.ok) return { ingredients: [], steps: [], readyInMinutes: null, servings: null }
 
       const data = await res.json()
       const text = data.content?.[0]?.text ?? ''
@@ -163,7 +166,7 @@ Write 5 to 8 clear steps. Each step should be one sentence. Use only the availab
         return JSON.parse(clean)
       } catch (e) {
         console.error('Failed to parse Claude response:', text)
-        return { steps: [], readyInMinutes: null, servings: null }
+        return { ingredients: [], steps: [], readyInMinutes: null, servings: null }
       }
     }
 
@@ -183,12 +186,25 @@ Write 5 to 8 clear steps. Each step should be one sentence. Use only the availab
             allIngredientNames,
             dietaryRestrictions
           )
+
+          const claudeIngredients = claude.ingredients ?? []
+          const matchCount = claudeIngredients.filter(i => i.inStock).length
+          const totalCount = claudeIngredients.length
+
           return {
             ...recipe,
-            steps:          claude.steps          ?? [],
+            usedIngredients: claudeIngredients
+              .filter(i => i.inStock)
+              .map(i => ({ name: i.name, amount: i.amount })),
+            missedIngredients: claudeIngredients
+              .filter(i => !i.inStock)
+              .map(i => ({ name: i.name, amount: i.amount })),
+            usedIngredientCount: matchCount,
+            missedIngredientCount: totalCount - matchCount,
+            steps: claude.steps ?? [],
             readyInMinutes: claude.readyInMinutes ?? null,
-            servings:       claude.servings       ?? recipe.servings ?? 2,
-            diets:          [],   
+            servings: claude.servings ?? recipe.servings ?? 2,
+            diets: [],
           }
         })
       )
