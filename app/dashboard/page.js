@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
 import { getFoodEmoji } from "@/lib/foodIcon";
+import { buildRateMap, isAlertItem } from "@/lib/consumptionRate";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -21,23 +22,20 @@ function StatusPill({ daysLeft }) {
   return <span className="pill pill-neutral">{daysLeft} days left</span>;
 }
 
-function EaiHero({ userName, expiringSoon }) {
+function EaiHero({ userName, alertItems }) {
   const [text, setText] = useState("");
   const router = useRouter();
 
-  const names = expiringSoon.slice(0, 2).map(i => i.name).join(" and ") || "expiring items";
-  const headline = `Hi, ${userName}! ${names ? `Cook **${names}** tonight.` : "Check your pantry!"}`;
-  const body = expiringSoon.length > 0
-    ? `${expiringSoon.length} ${expiringSoon.length === 1 ? "item expires" : "items expire"} soon. Ask e-ai for recipe suggestions that use what you already have.`
-    : "Your inventory looks fresh. Ask e-ai what to cook this week.";
+  const earlyAlerts = alertItems.filter(i => i.isEarlyAlert);
+  const topNames = alertItems.slice(0, 2).map(i => i.name);
 
-  function renderRich(str) {
-    return str.split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
-      p.startsWith("**") && p.endsWith("**")
-        ? <strong key={i} style={{ fontWeight: 700 }}>{p.slice(2, -2)}</strong>
-        : <span key={i}>{p}</span>
-    );
-  }
+  const headline = alertItems.length > 0
+    ? `Hi, ${userName}! Use up your ${topNames.join(" and ")}${alertItems.length > 2 ? " and more" : ""} — they won't last.`
+    : `Hi, ${userName}! Your pantry looks fresh.`;
+
+  const body = alertItems.length > 0
+    ? `I flagged ${alertItems.length} ${alertItems.length === 1 ? "item" : "items"} before ${alertItems.length === 1 ? "it goes" : "they go"} to waste. Tap any to get recipe ideas.`
+    : "Nothing expiring soon. Ask e-ai what to cook this week.";
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -54,13 +52,8 @@ function EaiHero({ userName, expiringSoon }) {
       display: "flex", flexDirection: "column", gap: 18,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <span style={{
-          width: 30, height: 30, borderRadius: "50%",
-          background: "radial-gradient(circle at 30% 30%, var(--leaf-400) 0%, var(--leaf-600) 55%, var(--leaf-800) 100%)",
-          display: "inline-flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 0 0 2px rgba(255,255,255,0.6)", flexShrink: 0,
-        }}>
-          <I.sparkle size={16} stroke="#fff" strokeWidth={1.8} />
+        <span style={{ width: 30, height: 30, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+          <img src="/eai-logo-green.png" width={30} height={15} alt="e-ai logo" />
         </span>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
           <span className="t-heading-sm" style={{ color: "var(--text-primary)" }}>e-ai</span>
@@ -72,23 +65,50 @@ function EaiHero({ userName, expiringSoon }) {
 
       <div>
         <div className="t-heading-lg" style={{ marginBottom: 8, color: "var(--text-primary)", lineHeight: 1.25 }}>
-          {renderRich(headline)}
+          {headline}
         </div>
         <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: 14, lineHeight: 1.55, maxWidth: "78ch" }}>
           {body}
         </p>
       </div>
 
+      {alertItems.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+          {alertItems.map(item => {
+            const daysLeft = daysUntilExpiry(item.expiry_date);
+            const label = daysLeft < 0 ? "expired" : daysLeft === 0 ? "today" : daysLeft === 1 ? "1 day" : `${daysLeft} days`;
+            const dotColor = daysLeft <= 0 ? "#A32D2D" : daysLeft <= 3 ? "#C0392B" : "#BA7517";
+            return (
+              <button key={item.id} onClick={() => router.push("/eai")} style={{
+                display: "inline-flex", alignItems: "center", gap: 7,
+                background: "var(--surface-sunken)", border: "1px solid var(--stroke-subtle)",
+                borderRadius: 9999, padding: "5px 12px 5px 8px",
+                fontSize: 13, fontWeight: 500, color: "var(--text-primary)", cursor: "pointer",
+              }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+                {getFoodEmoji(item.name)} {item.name} — {label}
+                {item.isEarlyAlert && <span style={{ color: "#BA7517" }}>*</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {earlyAlerts.length > 0 && (
+        <p style={{ margin: "-6px 0 0", fontSize: 12, color: "var(--text-tertiary)" }}>
+          * alerted early — your household uses {earlyAlerts.map(i => i.name).join(", ")} faster than average
+        </p>
+      )}
+
       <form onSubmit={onSubmit} style={{ position: "relative", marginTop: 4 }}>
         <input
           value={text} onChange={(e) => setText(e.target.value)}
           className="input-pill"
           style={{ paddingRight: 56, background: "var(--surface-sunken)" }}
-          placeholder="Ask a follow-up — e.g. what about dinner for 2?"
+          placeholder="Ask a follow-up — e.g. what can I cook with these tonight?"
         />
         <button type="submit" aria-label="Send to e-ai" style={{
-          position: "absolute", right: 4, top: 4, bottom: 4,
-          width: 36, borderRadius: "50%",
+          position: "absolute", right: 4, top: 4, bottom: 4, width: 36, borderRadius: "50%",
           background: text.trim() ? "var(--leaf-600)" : "var(--surface-canvas)",
           color: text.trim() ? "#fff" : "var(--text-tertiary)",
           display: "flex", alignItems: "center", justifyContent: "center",
@@ -299,6 +319,7 @@ export default function DashboardPage() {
   const [groceryItems, setGroceryItems] = useState([]);
   const [displayName, setDisplayName] = useState("there");
   const [loading, setLoading] = useState(true);
+  const [rateMap, setRateMap] = useState(new Map());
 
   useEffect(() => {
     async function load() {
@@ -330,12 +351,26 @@ export default function DashboardPage() {
         .order("created_at", { ascending: false });
       setGroceryItems(grocery || []);
 
+      const { data: logs } = await supabase
+        .from("consumption_log")
+        .select("food_item_name, consumed_at, item_added_at")
+        .eq("household_id", member.household_id);
+      setRateMap(buildRateMap(logs || []));
+
       setLoading(false);
     }
     load();
   }, []);
 
-  const expiringSoon = inventoryItems.filter(i => daysUntilExpiry(i.expiry_date) <= 2);
+  const alertItems = inventoryItems
+    .map(item => {
+      const { shouldAlert, isEarlyAlert } = isAlertItem(item, rateMap);
+      return { ...item, isEarlyAlert, shouldAlert };
+    })
+    .filter(item => item.shouldAlert)
+    .sort((a, b) => new Date(a.expiry_date) - new Date(b.expiry_date));
+
+  const expiringSoon = alertItems;
 
   if (loading) return (
     <div style={{ minHeight: "100vh", background: "var(--surface-canvas)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -364,7 +399,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <EaiHero userName={firstName} expiringSoon={expiringSoon} />
+      <EaiHero userName={firstName}  alertItems={alertItems} />
 
       <InventoryStrip items={inventoryItems} expiringSoon={expiringSoon} />
 

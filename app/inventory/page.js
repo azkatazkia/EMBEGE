@@ -7,7 +7,8 @@ import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
 import ReceiptScanner from "@/components/ReceiptScanner"
-import { getFoodEmoji } from "@/lib/foodIcon"
+import { getFoodEmoji } from "@/lib/foodIcon";
+import { getSuggestedExpiry } from "@/lib/consumptionRate";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -177,36 +178,30 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 >
   {hovering && (
     <div style={{
-      position: "absolute", bottom: 0, left: 0, right: 0,
-      paddingBottom: "calc(100% + 8px)", 
-      zIndex: 10,
+      position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
+      display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
+      background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
+      borderRadius: 12, padding: 8, boxShadow: "var(--e-3)", zIndex: 10,
     }}>
-      <div style={{
-        position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
-        display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
-        background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
-        borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
-      }}>
-        <button
-          className="btn btn-secondary btn-sm"
-          style={{ flexDirection: "column", gap: 4, height: 56 }}
-          onClick={() => setUsingUp(true)}
-          title="Some left"
-        >
-          <I.clock size={18} />
-          <span style={{ fontSize: 11 }}>Some left</span>
-        </button>
+      <button
+        className="btn btn-secondary btn-sm"
+        style={{ flexDirection: "column", gap: 4, height: 56 }}
+        onClick={() => setUsingUp(true)}
+        title="Some left"
+      >
+        <I.clock size={18} />
+        <span style={{ fontSize: 11 }}>Some left</span>
+      </button>
 
-        <button
-          className="btn btn-primary btn-sm"
-          style={{ flexDirection: "column", gap: 4, height: 56 }}
-          onClick={() => onUseUp(item, null)}
-          title="All used up"
-        >
-          <I.check size={18} stroke="#fff" />
-          <span style={{ fontSize: 11 }}>All gone</span>
-        </button>
-      </div>
+      <button
+        className="btn btn-primary btn-sm"
+        style={{ flexDirection: "column", gap: 4, height: 56 }}
+        onClick={() => onUseUp(item, null)}
+        title="All used up"
+      >
+        <I.check size={18} stroke="#fff" />
+        <span style={{ fontSize: 11 }}>All gone</span>
+      </button>
     </div>
   )}
 
@@ -246,6 +241,20 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 }
 
 function AddItemModal({ onClose, onAdd, saving }) {
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("Fridge");
+  const [suggestedExpiry, setSuggestedExpiry] = useState("");
+  const [isSuggested, setIsSuggested] = useState(false);
+
+  useEffect(() => {
+    if (!name.trim()) return;
+    const suggested = getSuggestedExpiry(name, location);
+    if (suggested) {
+      setSuggestedExpiry(suggested);
+      setIsSuggested(true);
+    }
+  }, [name, location]);
+
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }}>
       <div style={{ width: "min(560px, calc(100vw - 40px))", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "40px", boxShadow: "var(--e-4)" }}>
@@ -257,7 +266,7 @@ function AddItemModal({ onClose, onAdd, saving }) {
         <form onSubmit={onAdd} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Food name</span>
-            <input name="name" required className="input" placeholder="e.g. Milk, Chicken thighs" />
+            <input name="name" required className="input" placeholder="e.g. Milk, Chicken thighs" value={name} onChange={e => setName(e.target.value)} />
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Quantity</span>
@@ -265,11 +274,16 @@ function AddItemModal({ onClose, onAdd, saving }) {
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Expiry date</span>
-            <input name="expiry_date" type="date" required className="input" />
+            <input name="expiry_date" type="date" required className="input" value={suggestedExpiry} onChange={e => { setSuggestedExpiry(e.target.value); setIsSuggested(false); }} />
+            {isSuggested && (
+              <span style={{ fontSize: 12, color: "var(--leaf-600)", marginTop: -2 }}>
+                ✦ Suggested based on food type — you can change it
+              </span>
+            )}
           </label>
           <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span className="input-label">Storage location</span>
-            <select name="storage_location" className="input" style={{ height: 44 }}>
+            <select name="storage_location" className="input" style={{ height: 44 }} value={location} onChange={e => setLocation(e.target.value)}>
               <option>Fridge</option>
               <option>Freezer</option>
               <option>Pantry</option>
@@ -329,7 +343,7 @@ export default function InventoryPage() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [displayName, setDisplayName] = useState("?");
-  const [scannerOpen, setScannerOpen] = useState(false)
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -353,10 +367,10 @@ export default function InventoryPage() {
     init();
   }, []);
 
-  async function loadItems(hhId, uid) {
+  async function loadItems(hhId, uid, silent = false) {
     const hid = hhId ?? householdId;
     if (!hid) return;
-    setLoading(true);
+    if (!silent) setLoading(true);
 
     const { data: foodItems, error: itemsErr } = await supabase
       .from("food_items")
@@ -383,6 +397,26 @@ export default function InventoryPage() {
     setLoading(false);
   }
 
+  useEffect(() => {
+    if (!householdId || !userId) return;
+    const hid = householdId;
+    const uid = userId;
+
+    const channel = supabase
+      .channel(`food_items:${hid}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "food_items",
+        filter: `household_id=eq.${hid}`,
+      }, () => {
+        loadItems(hid, uid, true);
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [householdId, userId]);
+
   async function handleAdd(e) {
     e.preventDefault();
     if (!householdId || !userId) return;
@@ -390,45 +424,66 @@ export default function InventoryPage() {
     setError(null);
 
     const fd = new FormData(e.target);
-    const { error: insertErr } = await supabase.from("food_items").insert({
+    const newItem = {
+      id: `temp-${Date.now()}`,
       household_id: householdId,
       name: fd.get("name"),
       quantity: fd.get("quantity"),
       expiry_date: fd.get("expiry_date"),
       storage_location: fd.get("storage_location"),
       added_by: userId,
+      added_by_name: memberMap[userId] ?? "You",
+      created_at: new Date().toISOString(),
+    };
+    setItems(prev => [...prev, newItem].sort((a, b) => new Date(a.expiry_date) - new Date(b.expiry_date)));
+    setShowAddForm(false);
+    e.target.reset();
+
+    const { error: insertErr } = await supabase.from("food_items").insert({
+      household_id: householdId,
+      name: newItem.name,
+      quantity: newItem.quantity,
+      expiry_date: newItem.expiry_date,
+      storage_location: newItem.storage_location,
+      added_by: userId,
     });
 
     setSaving(false);
-    if (insertErr) { setError(insertErr.message); return; }
-
-    setShowAddForm(false);
-    e.target.reset();
-    await loadItems(householdId, userId);
+    if (insertErr) {
+      setItems(prev => prev.filter(i => i.id !== newItem.id));
+      setError(insertErr.message);
+    }
   }
 
   async function handleEdit(id, form) {
+    setItems(prev => prev.map(i => i.id === id ? { ...i, ...form } : i));
+    setSelectedItem(prev => prev ? { ...prev, ...form } : null);
     const { error: editErr } = await supabase.from("food_items").update({
       name: form.name,
       quantity: form.quantity,
       expiry_date: form.expiry_date,
       storage_location: form.storage_location,
     }).eq("id", id);
-    if (editErr) { setError(editErr.message); return; }
-    await loadItems(householdId, userId);
-    setSelectedItem(prev => prev ? { ...prev, ...form } : null);
+    if (editErr) { setError(editErr.message); loadItems(householdId, userId, true); }
   }
 
   async function handleDelete(id) {
-    const { error: delErr } = await supabase.from("food_items").delete().eq("id", id);
-    if (delErr) { setError(delErr.message); return; }
+    setItems(prev => prev.filter(i => i.id !== id));
     setSelectedItem(null);
-    await loadItems(householdId, userId);
+    const { error: delErr } = await supabase.from("food_items").delete().eq("id", id);
+    if (delErr) { setError(delErr.message); loadItems(householdId, userId, true); }
   }
 
   async function handleUseUp(item, remaining) {
-    const fullyUsed = remaining === null; 
-  
+    const fullyUsed = remaining === null;
+
+    if (fullyUsed) {
+      setItems(prev => prev.filter(i => i.id !== item.id));
+    } else {
+      setItems(prev => prev.map(i => i.id === item.id ? { ...i, quantity: remaining } : i));
+    }
+    setSelectedItem(null);
+
     await supabase.from("consumption_log").insert({
       household_id: householdId,
       food_item_id: item.id,
@@ -436,16 +491,14 @@ export default function InventoryPage() {
       original_quantity: item.quantity,
       remaining_quantity: remaining,
       consumed_by: userId,
+      item_added_at: item.created_at,
     });
-  
+
     if (fullyUsed) {
       await supabase.from("food_items").delete().eq("id", item.id);
     } else {
       await supabase.from("food_items").update({ quantity: remaining }).eq("id", item.id);
     }
-  
-    setSelectedItem(null);
-    await loadItems(householdId, userId);
   }
 
   const locations = ["All", "Fridge", "Freezer", "Pantry"];
@@ -587,7 +640,6 @@ export default function InventoryPage() {
                           added_by: userId,
                       }))
                   );
-                  await loadItems(householdId, userId);
               }}
               />
       )}
