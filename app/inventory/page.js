@@ -178,36 +178,30 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 >
   {hovering && (
     <div style={{
-      position: "absolute", bottom: 0, left: 0, right: 0,
-      paddingBottom: "calc(100% + 8px)", 
-      zIndex: 10,
+      position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
+      display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
+      background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
+      borderRadius: 12, padding: 8, boxShadow: "var(--e-3)", zIndex: 10,
     }}>
-      <div style={{
-        position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
-        display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
-        background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
-        borderRadius: 12, padding: 8, boxShadow: "var(--e-3)",
-      }}>
-        <button
-          className="btn btn-secondary btn-sm"
-          style={{ flexDirection: "column", gap: 4, height: 56 }}
-          onClick={() => setUsingUp(true)}
-          title="Some left"
-        >
-          <I.clock size={18} />
-          <span style={{ fontSize: 11 }}>Some left</span>
-        </button>
+      <button
+        className="btn btn-secondary btn-sm"
+        style={{ flexDirection: "column", gap: 4, height: 56 }}
+        onClick={() => setUsingUp(true)}
+        title="Some left"
+      >
+        <I.clock size={18} />
+        <span style={{ fontSize: 11 }}>Some left</span>
+      </button>
 
-        <button
-          className="btn btn-primary btn-sm"
-          style={{ flexDirection: "column", gap: 4, height: 56 }}
-          onClick={() => onUseUp(item, null)}
-          title="All used up"
-        >
-          <I.check size={18} stroke="#fff" />
-          <span style={{ fontSize: 11 }}>All gone</span>
-        </button>
-      </div>
+      <button
+        className="btn btn-primary btn-sm"
+        style={{ flexDirection: "column", gap: 4, height: 56 }}
+        onClick={() => onUseUp(item, null)}
+        title="All used up"
+      >
+        <I.check size={18} stroke="#fff" />
+        <span style={{ fontSize: 11 }}>All gone</span>
+      </button>
     </div>
   )}
 
@@ -430,42 +424,66 @@ export default function InventoryPage() {
     setError(null);
 
     const fd = new FormData(e.target);
-    const { error: insertErr } = await supabase.from("food_items").insert({
+    const newItem = {
+      id: `temp-${Date.now()}`,
       household_id: householdId,
       name: fd.get("name"),
       quantity: fd.get("quantity"),
       expiry_date: fd.get("expiry_date"),
       storage_location: fd.get("storage_location"),
       added_by: userId,
+      added_by_name: memberMap[userId] ?? "You",
+      created_at: new Date().toISOString(),
+    };
+    setItems(prev => [...prev, newItem].sort((a, b) => new Date(a.expiry_date) - new Date(b.expiry_date)));
+    setShowAddForm(false);
+    e.target.reset();
+
+    const { error: insertErr } = await supabase.from("food_items").insert({
+      household_id: householdId,
+      name: newItem.name,
+      quantity: newItem.quantity,
+      expiry_date: newItem.expiry_date,
+      storage_location: newItem.storage_location,
+      added_by: userId,
     });
 
     setSaving(false);
-    if (insertErr) { setError(insertErr.message); return; }
-
-    setShowAddForm(false);
-    e.target.reset();
+    if (insertErr) {
+      setItems(prev => prev.filter(i => i.id !== newItem.id));
+      setError(insertErr.message);
+    }
   }
 
   async function handleEdit(id, form) {
+    setItems(prev => prev.map(i => i.id === id ? { ...i, ...form } : i));
+    setSelectedItem(prev => prev ? { ...prev, ...form } : null);
     const { error: editErr } = await supabase.from("food_items").update({
       name: form.name,
       quantity: form.quantity,
       expiry_date: form.expiry_date,
       storage_location: form.storage_location,
     }).eq("id", id);
-    if (editErr) { setError(editErr.message); return; }
-    setSelectedItem(prev => prev ? { ...prev, ...form } : null);
+    if (editErr) { setError(editErr.message); loadItems(householdId, userId, true); }
   }
 
   async function handleDelete(id) {
-    const { error: delErr } = await supabase.from("food_items").delete().eq("id", id);
-    if (delErr) { setError(delErr.message); return; }
+    setItems(prev => prev.filter(i => i.id !== id));
     setSelectedItem(null);
+    const { error: delErr } = await supabase.from("food_items").delete().eq("id", id);
+    if (delErr) { setError(delErr.message); loadItems(householdId, userId, true); }
   }
 
   async function handleUseUp(item, remaining) {
-    const fullyUsed = remaining === null; 
-  
+    const fullyUsed = remaining === null;
+
+    if (fullyUsed) {
+      setItems(prev => prev.filter(i => i.id !== item.id));
+    } else {
+      setItems(prev => prev.map(i => i.id === item.id ? { ...i, quantity: remaining } : i));
+    }
+    setSelectedItem(null);
+
     await supabase.from("consumption_log").insert({
       household_id: householdId,
       food_item_id: item.id,
@@ -475,14 +493,12 @@ export default function InventoryPage() {
       consumed_by: userId,
       item_added_at: item.created_at,
     });
-  
+
     if (fullyUsed) {
       await supabase.from("food_items").delete().eq("id", item.id);
     } else {
       await supabase.from("food_items").update({ quantity: remaining }).eq("id", item.id);
     }
-  
-    setSelectedItem(null);
   }
 
   const locations = ["All", "Fridge", "Freezer", "Pantry"];
