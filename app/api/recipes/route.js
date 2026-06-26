@@ -22,10 +22,13 @@ export async function GET() {
 
     const householdId = member.household_id
 
+    const todayStr = new Date().toISOString().split('T')[0] 
+
     const { data: allItems, error: itemsError } = await supabase
       .from('food_items')
       .select('id, name, quantity, expiry_date, storage_location')
       .eq('household_id', householdId)
+      .gte('expiry_date', todayStr)     
       .order('expiry_date', { ascending: true })
 
     if (itemsError) {

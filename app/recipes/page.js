@@ -53,20 +53,20 @@ function daysUntilExpiry(dateStr) {
 }
 
 function mapSpoonacularRecipe(r) {
-  const usedIngs = (r.usedIngredients ?? []).map(i => ({
-    name: i.name,
-    qty: i.amount ?? '',
-    status: 'in-stock',
-    badge: 'In pantry',
-    image: i.image,
-  }))
-  const missedIngs = (r.missedIngredients ?? []).map(i => ({
-    name: i.name,
-    qty: i.amount ?? '',
-    status: 'missing',
-    badge: 'Not in stock',
-    image: i.image,
-  }))
+const usedIngs = (r.usedIngredients ?? []).map(i => ({
+  name: i.name,
+  qty: i.amount ?? '',
+  status: 'in-stock',
+  badge: 'In pantry',
+  image: i.image,
+}))
+const missedIngs = (r.missedIngredients ?? []).map(i => ({
+  name: i.name,
+  qty: i.amount ?? '',
+  status: 'missing',
+  badge: 'Not in stock',
+  image: i.image,
+}))
 
   return {
     id: r.id,
