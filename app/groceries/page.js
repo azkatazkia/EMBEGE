@@ -185,7 +185,6 @@ export default function GroceriesPage() {
     if (!newItem.trim() || !householdId) return;
     setAdding(true);
 
-    // Optimistic update — show item immediately
     const tempItem = {
       id: `temp-${Date.now()}`,
       household_id: householdId,
@@ -206,27 +205,23 @@ export default function GroceriesPage() {
     });
     setAdding(false);
     if (err) {
-      // Roll back on failure
       setItems(prev => prev.filter(i => i.id !== tempItem.id));
       setError(err.message);
     }
   }
 
   async function handleToggle(id, currentChecked) {
-    // Optimistic update
     setItems(prev => prev.map(i => i.id === id ? { ...i, is_checked: !currentChecked } : i));
     await supabase.from("grocery_list").update({ is_checked: !currentChecked }).eq("id", id);
   }
 
   async function handleEditItem(id, newName) {
-    // Optimistic update
     setItems(prev => prev.map(i => i.id === id ? { ...i, item_name: newName } : i));
     const { error: err } = await supabase.from("grocery_list").update({ item_name: newName }).eq("id", id);
     if (err) { setError(err.message); loadItems(householdId, true); }
   }
 
   async function handleDeleteItem(id) {
-    // Optimistic update
     setItems(prev => prev.filter(i => i.id !== id));
     const { error: err } = await supabase.from("grocery_list").delete().eq("id", id);
     if (err) { setError(err.message); loadItems(householdId, true); }
