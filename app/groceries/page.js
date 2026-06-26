@@ -213,6 +213,7 @@ export default function GroceriesPage() {
   async function handleToggle(id, currentChecked) {
     setItems(prev => prev.map(i => i.id === id ? { ...i, is_checked: !currentChecked } : i));
     await supabase.from("grocery_list").update({ is_checked: !currentChecked }).eq("id", id);
+    await loadItems(householdId, true);
   }
 
   async function handleEditItem(id, newName) {
