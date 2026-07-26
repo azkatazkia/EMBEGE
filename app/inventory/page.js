@@ -9,6 +9,8 @@ import { I } from "@/components/Icons";
 import ReceiptScanner from "@/components/ReceiptScanner"
 import { getFoodEmoji } from "@/lib/foodIcon";
 import { getSuggestedExpiry } from "@/lib/consumptionRate";
+import { parseQuantityToKg, computeConsumedKg, parseEstimateKg } from "@/lib/quantity";
+import { calculateImpact } from "@/lib/impact";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -65,12 +67,15 @@ function ProductCard({ item, onClick }) {
   );
 }
 
-function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
+function ItemModal({ item, onClose, onDelete, onEdit, onUseUp, onDiscard }) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [usingUp, setUsingUp] = useState(false);
   const [remaining, setRemaining] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [pendingAction, setPendingAction] = useState(null);
+  const [weightEstimate, setWeightEstimate] = useState("");
   const [form, setForm] = useState({
     name: item.name, 
     quantity: item.quantity,
@@ -100,6 +105,71 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
     await onEdit(item.id, form);
     setSaving(false);
     setEditing(false);
+  }
+
+  function handleAllGoneClick() {
+    setActionError("");
+    const originalKg = parseQuantityToKg(item.quantity);
+    if (originalKg !== null) {
+      onUseUp(item, null, originalKg);
+      return;
+    }
+    setPendingAction({ type: "allGone" });
+  }
+
+  function handleSomeLeftConfirm() {
+    setActionError("");
+    const remainingText = remaining.trim();
+    const originalKg = parseQuantityToKg(item.quantity);
+    const remainingKg = parseQuantityToKg(remainingText);
+
+    if (originalKg !== null && remainingKg !== null) {
+      const { consumedKg, error } = computeConsumedKg(originalKg, remainingKg);
+      if (error) {
+        setActionError(error);
+        return;
+      }
+      onUseUp(item, remainingText, consumedKg);
+      return;
+    }
+
+    setPendingAction({ type: "someLeft", remainingText });
+  }
+
+  function handleEstimateConfirm() {
+    setActionError("");
+    const estimateKg = parseEstimateKg(weightEstimate);
+    if (estimateKg === null) {
+      setActionError("Enter a weight, e.g. 0.5kg or 500g");
+      return;
+    }
+
+    if (pendingAction?.type === "allGone") {
+      onUseUp(item, null, estimateKg);
+    } else if (pendingAction?.type === "someLeft") {
+      onUseUp(item, pendingAction.remainingText, estimateKg);
+    } else if (pendingAction?.type === "discard") {
+      onDiscard(item, estimateKg);
+    }
+  }
+
+  function handleDiscardClick() {
+    setActionError("");
+    setPendingAction({ type: "discard" });
+  }
+
+  function handleDiscardConfirm() {
+    setActionError("");
+    const originalKg = parseQuantityToKg(item.quantity);
+    if (originalKg !== null) {
+      onDiscard(item, originalKg);
+    }
+  }
+
+  function cancelPendingAction() {
+    setPendingAction(null);
+    setWeightEstimate("");
+    setActionError("");
   }
 
   return (
@@ -178,7 +248,7 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 >
   {hovering && (
     <div style={{
-      position: "absolute", bottom: "calc(100% + 8px)", left: 0, right: 0,
+      position: "absolute", bottom: "100%", paddingBottom: 8, left: 0, right: 0,
       display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6,
       background: "var(--surface-canvas)", border: "1px solid var(--stroke-subtle)",
       borderRadius: 12, padding: 8, boxShadow: "var(--e-3)", zIndex: 10,
@@ -196,7 +266,7 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
       <button
         className="btn btn-primary btn-sm"
         style={{ flexDirection: "column", gap: 4, height: 56 }}
-        onClick={() => onUseUp(item, null)}
+        onClick={handleAllGoneClick}
         title="All used up"
       >
         <I.check size={18} stroke="#fff" />
@@ -211,7 +281,17 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
 </div>
               </div>
 
-            {usingUp && (
+            {daysLeft < 0 && (
+              <button
+                className="btn btn-secondary btn-lg"
+                style={{ width: "100%", marginTop: 12, color: "var(--status-urgent)" }}
+                onClick={handleDiscardClick}
+              >
+                <I.x size={16} /> Mark as discarded
+              </button>
+            )}
+
+            {usingUp && !pendingAction && (
               <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
                 <span className="t-heading-sm">How much is left?</span>
                 <input
@@ -221,18 +301,99 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp }) {
                   onChange={e => setRemaining(e.target.value)}
                   autoFocus
                 />
+                {actionError && <span style={{ fontSize: 13, color: "var(--status-urgent)" }}>{actionError}</span>}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                  <button className="btn btn-secondary" onClick={() => { setUsingUp(false); setRemaining(""); }}>Cancel</button>
+                  <button className="btn btn-secondary" onClick={() => { setUsingUp(false); setRemaining(""); setActionError(""); }}>Cancel</button>
                   <button
                     className="btn btn-primary"
                     disabled={!remaining.trim()}
-                    onClick={() => onUseUp(item, remaining.trim())}
+                    onClick={handleSomeLeftConfirm}
                   >
                     Confirm
                   </button>
                 </div>
               </div>
             )}
+
+            {(pendingAction?.type === "allGone" || pendingAction?.type === "someLeft") && (
+              <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                <span className="t-heading-sm">Estimate the weight</span>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                  {`"${item.quantity}" isn't in grams or kilograms, so we can't work out the weight automatically.`}
+                </span>
+                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <span className="input-label">Enter an estimated weight</span>
+                  <input
+                    className="input"
+                    placeholder="e.g. 0.5kg or 500g"
+                    inputMode="decimal"
+                    value={weightEstimate}
+                    onChange={e => setWeightEstimate(e.target.value)}
+                    autoFocus
+                  />
+                </label>
+                {actionError && <span style={{ fontSize: 13, color: "var(--status-urgent)" }}>{actionError}</span>}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <button className="btn btn-secondary" onClick={cancelPendingAction}>Cancel</button>
+                  <button
+                    className="btn btn-primary"
+                    disabled={!weightEstimate.trim()}
+                    onClick={handleEstimateConfirm}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {pendingAction?.type === "discard" && (() => {
+              const originalKg = parseQuantityToKg(item.quantity);
+              return (
+                <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                  <span className="t-heading-sm">Confirm discard</span>
+                  {originalKg !== null ? (
+                    <>
+                      <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                        {`This logs ${item.quantity} of ${item.name} as wasted and removes it from inventory.`}
+                      </span>
+                      {actionError && <span style={{ fontSize: 13, color: "var(--status-urgent)" }}>{actionError}</span>}
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                        <button className="btn btn-secondary" onClick={cancelPendingAction}>Cancel</button>
+                        <button className="btn btn-primary" onClick={handleDiscardConfirm}>Confirm discard</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                        {`"${item.quantity}" isn't in grams or kilograms, so we can't work out the weight automatically.`}
+                      </span>
+                      <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        <span className="input-label">Enter an estimated weight</span>
+                        <input
+                          className="input"
+                          placeholder="e.g. 0.5kg or 500g"
+                          inputMode="decimal"
+                          value={weightEstimate}
+                          onChange={e => setWeightEstimate(e.target.value)}
+                          autoFocus
+                        />
+                      </label>
+                      {actionError && <span style={{ fontSize: 13, color: "var(--status-urgent)" }}>{actionError}</span>}
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                        <button className="btn btn-secondary" onClick={cancelPendingAction}>Cancel</button>
+                        <button
+                          className="btn btn-primary"
+                          disabled={!weightEstimate.trim()}
+                          onClick={handleEstimateConfirm}
+                        >
+                          Confirm discard
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })()}
           </>
         )}
       </div>
@@ -474,8 +635,10 @@ export default function InventoryPage() {
     if (delErr) { setError(delErr.message); loadItems(householdId, userId, true); }
   }
 
-  async function handleUseUp(item, remaining) {
+  async function handleUseUp(item, remaining, consumedKg) {
     const fullyUsed = remaining === null;
+    const weightKg = Number.isFinite(consumedKg) ? consumedKg : 0;
+    const { co2Kg, valueSgd } = calculateImpact(item.name, weightKg);
 
     if (fullyUsed) {
       setItems(prev => prev.filter(i => i.id !== item.id));
@@ -492,6 +655,10 @@ export default function InventoryPage() {
       remaining_quantity: remaining,
       consumed_by: userId,
       item_added_at: item.created_at,
+      consumed_at: new Date().toISOString(),
+      quantity_consumed_kg: weightKg,
+      co2_kg: co2Kg,
+      value_sgd: valueSgd,
     });
 
     if (fullyUsed) {
@@ -499,6 +666,27 @@ export default function InventoryPage() {
     } else {
       await supabase.from("food_items").update({ quantity: remaining }).eq("id", item.id);
     }
+  }
+
+  async function handleDiscard(item, wastedKg) {
+    const weightKg = Number.isFinite(wastedKg) ? wastedKg : 0;
+    const { co2Kg, valueSgd } = calculateImpact(item.name, weightKg);
+
+    setItems(prev => prev.filter(i => i.id !== item.id));
+    setSelectedItem(null);
+
+    await supabase.from("waste_log").insert({
+      household_id: householdId,
+      food_item_id: item.id,
+      food_item_name: item.name,
+      quantity: item.quantity,
+      quantity_wasted_kg: weightKg,
+      co2_kg: co2Kg,
+      value_sgd: valueSgd,
+      wasted_at: new Date().toISOString(),
+    });
+
+    await supabase.from("food_items").delete().eq("id", item.id);
   }
 
   const locations = ["All", "Fridge", "Freezer", "Pantry"];
@@ -618,7 +806,7 @@ export default function InventoryPage() {
       )}
 
       {selectedItem && (
-        <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} onDelete={handleDelete} onEdit={handleEdit}  onUseUp={handleUseUp} />
+        <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} onDelete={handleDelete} onEdit={handleEdit} onUseUp={handleUseUp} onDiscard={handleDiscard} />
       )}
       {showAddForm && (
         <AddItemModal onClose={() => setShowAddForm(false)} onAdd={handleAdd} saving={saving} />

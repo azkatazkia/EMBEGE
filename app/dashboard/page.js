@@ -8,6 +8,8 @@ import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
 import { getFoodEmoji } from "@/lib/foodIcon";
 import { buildRateMap, isAlertItem } from "@/lib/consumptionRate";
+import { summarizeImpact, formatSgd, formatCo2Kg } from "@/lib/impactSummary";
+import { formatKg } from "@/lib/quantity";
 
 function daysUntilExpiry(dateStr) {
   if (!dateStr) return 999;
@@ -262,23 +264,53 @@ function SmartGroceryCard({ groceryItems }) {
   );
 }
 
-function ProgressColumn() {
+function ImpactDonut({ savedPercent, wastedPercent, hasData }) {
+  const savedDeg = hasData ? (savedPercent / 100) * 360 : 0;
+  const ringBackground = hasData
+    ? `conic-gradient(var(--leaf-600) 0deg ${savedDeg}deg, var(--status-urgent) ${savedDeg}deg 360deg)`
+    : `conic-gradient(var(--stroke-default) 0deg 360deg)`;
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+      <div style={{
+        width: 108, height: 108, borderRadius: "50%", background: ringBackground,
+        display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+      }}>
+        <div style={{ width: 62, height: 62, borderRadius: "50%", background: "var(--surface-sunken)" }} />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--leaf-600)", flexShrink: 0 }} />
+          <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Used</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>
+            {hasData ? `${savedPercent}%` : "—"}
+          </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--status-urgent)", flexShrink: 0 }} />
+          <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Wasted</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>
+            {hasData ? `${wastedPercent}%` : "—"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProgressColumn({ impact }) {
+  const { savedKg, wastedKg, wastedCo2Kg, wastedValueSgd, savedPercent, wastedPercent, hasData } = impact;
+
   return (
     <div className="card" style={{ background: "var(--surface-canvas)", display: "flex", flexDirection: "column", gap: 14 }}>
       <h3 className="t-heading-lg" style={{ margin: 0 }}>Your progress</h3>
 
-      <div style={{
-        position: "relative", textAlign: "left", width: "100%",
-        background: "var(--leaf-400)", borderRadius: "var(--r-xl)",
-        padding: "22px 24px", color: "var(--leaf-900)", overflow: "hidden",
-      }}>
-        <svg style={{ position: "absolute", right: -8, top: -10, opacity: 0.35 }} width="140" height="160" viewBox="0 0 140 160" fill="none">
-          <path d="M120 10 C90 30, 110 70, 70 90 C30 110, 50 140, 20 150" stroke="var(--leaf-900)" strokeWidth="1.5" strokeLinecap="round"/>
-          <path d="M100 25 C95 20, 105 18, 108 25 C111 32, 100 32, 100 25 Z" fill="var(--leaf-900)" fillOpacity="0.55"/>
-        </svg>
-        <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4, position: "relative" }}>You have saved $182</div>
-        <div style={{ fontSize: 13, color: "rgba(46,59,31,0.7)", maxWidth: 280, position: "relative" }}>
-          That's a family dinner at a decent restaurant, paid for by not wasting food.
+      <div className="card-sunken" style={{ padding: "22px 24px" }}>
+        <ImpactDonut savedPercent={savedPercent} wastedPercent={wastedPercent} hasData={hasData} />
+        <div style={{ marginTop: 14, fontSize: 12, color: "var(--text-tertiary)" }}>
+          {hasData
+            ? `${formatKg(savedKg)} used · ${formatKg(wastedKg)} wasted so far`
+            : "No used or wasted items logged yet."}
         </div>
       </div>
 
@@ -288,9 +320,13 @@ function ProgressColumn() {
             <path d="M30 90 C20 70, 40 60, 30 40 C20 20, 40 10, 35 0" stroke="var(--leaf-800)" strokeWidth="1.5" strokeLinecap="round"/>
             <path d="M55 90 C45 70, 65 60, 55 40 C45 20, 65 10, 60 0" stroke="var(--leaf-800)" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
-          <div style={{ marginTop: 28, color: "var(--leaf-800)", position: "relative" }}>
-            <div style={{ fontWeight: 700, fontSize: 17, lineHeight: 1.2, marginBottom: 6 }}>Small habit,<br/>real impact.</div>
-            <div style={{ fontSize: 12, color: "rgba(74,92,53,0.7)", lineHeight: 1.4 }}>You prevented 2.4kg of CO₂.</div>
+          <div style={{ color: "var(--leaf-800)", position: "relative" }}>
+            <div style={{ fontWeight: 700, fontSize: 20, lineHeight: 1.2, marginBottom: 6 }}>
+              {wastedKg > 0 ? formatCo2Kg(wastedCo2Kg) : "0kg"}
+            </div>
+            <div style={{ fontSize: 12, color: "rgba(74,92,53,0.7)", lineHeight: 1.4 }}>
+              {wastedKg > 0 ? "CO₂ from discarded food" : "Nothing discarded yet"}
+            </div>
           </div>
         </div>
 
@@ -299,9 +335,13 @@ function ProgressColumn() {
             <path d="M90 10 C70 20, 50 40, 30 70 C20 85, 25 100, 40 95" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
             <path d="M70 30 C65 25, 80 20, 82 32 C84 44, 70 38, 70 30 Z" fill="#fff" fillOpacity="0.4"/>
           </svg>
-          <div style={{ marginTop: 28, position: "relative" }}>
-            <div style={{ fontWeight: 700, fontSize: 17, marginBottom: 6 }}>You're in the top tier!</div>
-            <div style={{ fontSize: 12, color: "rgba(245,238,220,0.55)", lineHeight: 1.4 }}>You waste 35% less than average.</div>
+          <div style={{ position: "relative" }}>
+            <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 6 }}>
+              {wastedKg > 0 ? `~${formatSgd(wastedValueSgd)}` : "$0"}
+            </div>
+            <div style={{ fontSize: 12, color: "rgba(245,238,220,0.55)", lineHeight: 1.4 }}>
+              Estimated value of food wasted — not the exact price paid
+            </div>
           </div>
         </div>
       </div>
@@ -320,6 +360,8 @@ export default function DashboardPage() {
   const [displayName, setDisplayName] = useState("there");
   const [loading, setLoading] = useState(true);
   const [rateMap, setRateMap] = useState(new Map());
+  const [consumptionLogs, setConsumptionLogs] = useState([]);
+  const [wasteLogs, setWasteLogs] = useState([]);
 
   useEffect(() => {
     async function load() {
@@ -353,9 +395,16 @@ export default function DashboardPage() {
 
       const { data: logs } = await supabase
         .from("consumption_log")
-        .select("food_item_name, consumed_at, item_added_at")
+        .select("food_item_name, consumed_at, item_added_at, quantity_consumed_kg, co2_kg, value_sgd")
         .eq("household_id", member.household_id);
       setRateMap(buildRateMap(logs || []));
+      setConsumptionLogs(logs || []);
+
+      const { data: waste } = await supabase
+        .from("waste_log")
+        .select("quantity_wasted_kg, co2_kg, value_sgd")
+        .eq("household_id", member.household_id);
+      setWasteLogs(waste || []);
 
       setLoading(false);
     }
@@ -371,6 +420,8 @@ export default function DashboardPage() {
     .sort((a, b) => new Date(a.expiry_date) - new Date(b.expiry_date));
 
   const expiringSoon = alertItems;
+
+  const impact = summarizeImpact(consumptionLogs, wasteLogs);
 
   if (loading) return (
     <div style={{ minHeight: "100vh", background: "var(--surface-canvas)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -411,7 +462,7 @@ export default function DashboardPage() {
       }} className="dashboard-row">
         <CookTonightCard />
         <SmartGroceryCard groceryItems={groceryItems} />
-        <ProgressColumn />
+        <ProgressColumn impact={impact} />
       </section>
 
       <style>{`
