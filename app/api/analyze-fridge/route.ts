@@ -47,8 +47,7 @@ export async function POST(request: NextRequest) {
         ]
     })
 
-    const textBlock = message.content[0];
-    const rawText = textBlock.text;
+    const rawText = (message.content[0] as Anthropic.TextBlock).text;
 
     let items;
     try {
