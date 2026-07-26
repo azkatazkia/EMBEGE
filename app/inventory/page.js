@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase";
 import { AppShell } from "@/components/Sidebar";
 import { I } from "@/components/Icons";
 import ReceiptScanner from "@/components/ReceiptScanner"
+import PhotoScanner from "@/components/PhotoScanner";
 import { getFoodEmoji } from "@/lib/foodIcon";
 import { getSuggestedExpiry } from "@/lib/consumptionRate";
 import { parseQuantityToKg, computeConsumedKg, parseEstimateKg } from "@/lib/quantity";
@@ -505,6 +506,7 @@ export default function InventoryPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [displayName, setDisplayName] = useState("?");
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [photoScanOpen, setPhotoScanOpen] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -739,7 +741,7 @@ export default function InventoryPage() {
           <ActionChip icon={I.sparkle} label="Tell e-ai" onClick={() => router.push("/eai")} />
           <ActionChip icon={I.pencil} label="Manual entry" onClick={() => setShowAddForm(true)} />
           <ActionChip icon={I.receipt} label="Scan receipt" onClick={() => setScannerOpen(true)} />
-          <ActionChip icon={I.camera} label="Photo of fridge" onClick={() => alert("Photo scan — coming soon.")} />
+          <ActionChip icon={I.camera} label="Photo scan" onClick={() => setPhotoScanOpen(true)} />
         </div>
       </div>
 
@@ -831,6 +833,28 @@ export default function InventoryPage() {
               }}
               />
       )}
+
+      {photoScanOpen && (
+        <PhotoScanner
+          isOpen={photoScanOpen}
+          onClose={() => setPhotoScanOpen(false)}
+          onItemsConfirmed={async (items) => {
+            setPhotoScanOpen(false);
+            await supabase.from("food_items").insert(
+              items.map(item => ({
+                household_id: householdId,
+                name: item.name,
+                quantity: item.quantity,
+                expiry_date: item.expiry_date,
+                storage_location: item.storage_location,
+                added_by: userId,
+              }))
+            );
+            if (error) setError(error.message);
+          }}
+          />
+      )}
+
     </AppShell>
   );
 }
