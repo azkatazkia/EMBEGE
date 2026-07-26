@@ -5,7 +5,7 @@ import {
   Search, Plus, Filter, Bell, ArrowUpRight, ArrowRight, ArrowLeft,
   ChevronRight, ChevronDown, Send, Scan, Pencil, Trash2,
   Refrigerator, Snowflake, LayoutGrid, Camera, Check, Clock,
-  Leaf, X, Copy, LogOut, Receipt, Soup, FileUp
+  Leaf, X, Copy, LogOut, Receipt, Soup, FileUp, UserCircle
 } from "lucide-react";
 
 
@@ -48,6 +48,7 @@ export const I = {
   receipt:      wrap(Receipt),
   bowl:         wrap(Soup),
   upload:       wrap(FileUp),
+  user:         wrap(UserCircle),
   eai:          () => <img src="/eai-logo.png" alt="e-ai" className="w-6 h-6" />
 };
 
