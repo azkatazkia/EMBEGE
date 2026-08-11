@@ -174,9 +174,9 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp, onDiscard }) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }}>
-      <div style={{ width: "min(760px, calc(100vw - 40px))", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "48px", position: "relative", boxShadow: "var(--e-4)" }}>
-        <button onClick={onClose} className="btn btn-ghost btn-sm" style={{ position: "absolute", top: 20, right: 20 }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, overflowY: "auto", padding: "20px 0" }}>
+      <div style={{ width: "min(760px, calc(100vw - 40px))", maxHeight: "calc(100vh - 40px)", overflowY: "auto", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "48px", position: "relative", boxShadow: "var(--e-4)" }}>
+        <button onClick={onClose} className="btn btn-ghost btn-sm" style={{ position: "absolute", top: 20, right: 20, zIndex: 1 }}>
           <I.x size={20} />
         </button>
 
@@ -418,8 +418,8 @@ function AddItemModal({ onClose, onAdd, saving }) {
   }, [name, location]);
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }}>
-      <div style={{ width: "min(560px, calc(100vw - 40px))", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "40px", boxShadow: "var(--e-4)" }}>
+    <div style={{ position: "fixed", inset: 0, background: "var(--surface-overlay)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, overflowY: "auto", padding: "20px 0" }}>
+      <div style={{ width: "min(560px, calc(100vw - 40px))", maxHeight: "calc(100vh - 40px)", overflowY: "auto", borderRadius: "var(--r-2xl)", background: "var(--surface-canvas)", padding: "40px", boxShadow: "var(--e-4)" }}>
         <h2 className="t-heading-lg" style={{ margin: 0 }}>Add food item</h2>
         <p style={{ margin: "8px 0 24px", color: "var(--text-secondary)", fontSize: 14 }}>
           Manually add an item to your household inventory.
