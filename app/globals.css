@@ -282,6 +282,43 @@ img { display: block; max-width: 100%; }
   .hide-on-mobile { display: none !important; }
 }
 
+.mobile-topbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--surface-canvas);
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+@media (max-width: 768px) {
+  .mobile-topbar { display: flex; }
+}
+.mobile-topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.mobile-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mobile-topbar-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--leaf-800); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  text-decoration: none; flex-shrink: 0;
+}
+.mobile-topbar-logout {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary); background: transparent; border: none;
+  cursor: pointer;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
