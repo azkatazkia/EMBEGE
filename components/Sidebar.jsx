@@ -176,10 +176,38 @@ export function BottomNav() {
   );
 }
 
+export function MobileTopBar({ userInitial = "B", userName = "You" }) {
+  const router = useRouter();
+  const supabase = createClient();
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/login");
+  }
+
+  return (
+    <div className="mobile-topbar">
+      <Link href="/dashboard" aria-label="Embege home" className="mobile-topbar-logo">
+        <Logo size={22} />
+        <span style={{ fontWeight: 700, fontSize: 16 }}>embege</span>
+      </Link>
+      <div className="mobile-topbar-actions">
+        <Link href="/profile" aria-label="Profile and dietary restrictions" className="mobile-topbar-avatar">
+          {userInitial}
+        </Link>
+        <button onClick={handleLogout} aria-label="Log out" className="mobile-topbar-logout">
+          <I.logout size={20} strokeWidth={1.8} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function AppShell({ children, userInitial, userName }) {
   return (
     <div className="app-shell">
       <Sidebar userInitial={userInitial} userName={userName} />
+      <MobileTopBar userInitial={userInitial} userName={userName} />
       <main className="app-main">
         {children}
       </main>
