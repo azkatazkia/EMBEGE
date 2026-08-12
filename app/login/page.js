@@ -13,6 +13,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +28,18 @@ export default function LoginPage() {
     router.push("/dashboard");
   };
 
+  const handleForgotPassword = async () => {
+    setError(null);
+    if (!email.includes("@")) return setError("Enter your email above first.");
+    setResetLoading(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setResetLoading(false);
+    if (resetError) return setError(resetError.message);
+    setResetSent(true);
+  };
+  
   return (
     <div className="welcome-grid" style={{
       minHeight: "100vh", display: "grid",
@@ -58,6 +72,11 @@ export default function LoginPage() {
                 value={password} onChange={(e) => setPassword(e.target.value)}
               />
             </label>
+            {resetSent && (
+              <div style={{ background: "rgba(74,124,66,0.08)", color: "var(--leaf-800)", padding: "10px 14px", borderRadius: 12, fontSize: 13 }}>
+                Check your email for a password reset link.
+              </div>
+            )}
             {error && (
               <div style={{ background: "rgba(196,69,54,0.08)", color: "var(--status-urgent)", padding: "10px 14px", borderRadius: 12, fontSize: 13 }}>
                 {error}
@@ -67,7 +86,14 @@ export default function LoginPage() {
               {loading ? "Logging in…" : "Log in"}
             </button>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13 }}>
-              <span style={{ color: "var(--text-tertiary)" }}>Forgot password?</span>
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                disabled={resetLoading}
+                style={{ background: "none", border: "none", padding: 0, color: "var(--text-tertiary)", cursor: "pointer", textDecoration: "underline" }}
+              >
+                {resetLoading ? "Sending…" : "Forgot password?"}
+              </button>
               <Link href="/signup" style={{ color: "var(--text-brand)", fontWeight: 600 }}>Create account</Link>
             </div>
           </form>

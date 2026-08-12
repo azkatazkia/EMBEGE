@@ -153,13 +153,17 @@ export async function GET() {
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
+          model: 'claude-sonnet-4-5-20250929',
           max_tokens: 1024,
           messages: [{ role: 'user', content: prompt }],
         }),
       })
 
-      if (!res.ok) return { ingredients: [], steps: [], readyInMinutes: null, servings: null }
+      if (!res.ok) {
+        const errText = await res.text()
+        console.error('Claude API error:', res.status, errText)
+        return { ingredients: [], steps: [], readyInMinutes: null, servings: null }
+      }
 
       const data = await res.json()
       const text = data.content?.[0]?.text ?? ''
