@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AppShell } from "@/components/Sidebar";
 import { createClient } from "@/lib/supabase";
 import { I } from "@/components/Icons";
+import { useRouter } from "next/navigation";
 
 const TIME_CHIPS = ["Any", "Under 15 min", "Under 30 min", "Under 1 hr"];
 const INGR_CHIPS = ["All ingredients only", "Include partial matches"];
@@ -547,6 +548,7 @@ function DetailView({ recipe, dietaryRestrictions, onBack }) {
 
 export default function RecipesPage() {
   const supabase = createClient();
+  const router = useRouter();
 
   const [filterOpen,          setFilterOpen         ] = useState(false);
   const [searchQuery,         setSearchQuery        ] = useState("");
@@ -565,9 +567,10 @@ export default function RecipesPage() {
   const [error,               setError              ] = useState(null);
 
   useEffect(() => {
-    async function loadUser() {
+    async function init() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) { router.push("/login"); return; }
+
       const { data: member } = await supabase
         .from("household_members")
         .select("display_name")
@@ -577,11 +580,10 @@ export default function RecipesPage() {
         setDisplayName(member.display_name);
         setUserInitial(member.display_name[0]?.toUpperCase() ?? "?");
       }
-    }
-    loadUser();
-  }, []);
 
-  useEffect(() => {
+      await fetchRecipes();
+    }
+
     async function fetchRecipes() {
       setLoading(true);
       setError(null);
@@ -603,7 +605,8 @@ export default function RecipesPage() {
         setLoading(false);
       }
     }
-    fetchRecipes();
+
+    init();
   }, []);
 
   const filterArgs = { searchQuery, timeActive, ingrActive, dietActive };
