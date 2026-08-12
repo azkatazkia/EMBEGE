@@ -12,7 +12,6 @@ const NAV_ITEMS = [
   { id: "groceries",  label: "Grocery",   Icon: I.cart,     href: "/groceries" },
   { id: "household",  label: "Household", Icon: I.users,    href: "/household" },
   { id: "eai",        label: "e-ai",      Icon: I.eai,      href: "/eai" },
-  { id: "profile",    label: "Profile",   Icon: I.user,     href: "/profile" },
 ];
 
 export function Sidebar({ userInitial = "B", userName = "You" }) {
