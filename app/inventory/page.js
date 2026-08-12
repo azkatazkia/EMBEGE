@@ -235,8 +235,12 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp, onDiscard }) {
             </div>
 
             <div style={{ marginTop: 32, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
-              <button className="btn btn-secondary btn-lg">
-                <I.utensils size={16} /> Find Recipe
+              <button
+                className="btn btn-secondary btn-lg"
+                style={{ color: "var(--status-urgent)" }}
+                onClick={() => setPendingAction({ type: "delete" })}
+              >
+                <I.trash size={16} /> Delete
               </button>
               <button className="btn btn-secondary btn-lg" onClick={() => setEditing(true)}>
                 <I.pencil size={16} /> Edit
@@ -343,6 +347,19 @@ function ItemModal({ item, onClose, onDelete, onEdit, onUseUp, onDiscard }) {
                   >
                     Confirm
                   </button>
+                </div>
+              </div>
+            )}
+
+            {pendingAction?.type === "delete" && (
+              <div style={{ marginTop: 16, padding: 16, background: "var(--surface-sunken)", borderRadius: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                <span className="t-heading-sm">Delete this item?</span>
+                <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                  {`This removes ${item.name} from inventory. This doesn't count it as used or wasted.`}
+                </span>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <button className="btn btn-secondary" onClick={cancelPendingAction}>Cancel</button>
+                  <button className="btn btn-primary" style={{ background: "var(--status-urgent)" }} onClick={() => onDelete(item.id)}>Confirm delete</button>
                 </div>
               </div>
             )}
