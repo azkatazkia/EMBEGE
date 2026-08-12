@@ -720,9 +720,6 @@ export default function InventoryPage() {
           />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button className="btn btn-ghost btn-sm" style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--surface-canvas)" }} aria-label="Filter">
-            <I.filter size={18} />
-          </button>
           <button className="btn btn-dark" onClick={() => setShowAddForm(true)}>
             <I.plus size={16} stroke="#fff" /> Add item
           </button>

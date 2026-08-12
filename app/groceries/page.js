@@ -250,7 +250,15 @@ export default function GroceriesPage() {
             value={query} onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <button className="btn btn-dark" onClick={() => document.getElementById("grocery-add")?.focus()}>
+        <button
+          className="btn btn-dark"
+          onClick={() => {
+            const el = document.getElementById("grocery-add");
+            if (!el) return;
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            el.focus();
+          }}
+        >
           <I.plus size={16} stroke="#fff" /> Add item
         </button>
       </div>
