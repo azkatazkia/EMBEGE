@@ -186,6 +186,7 @@ memo = [
 import re
 words = len(re.sub(r"<[^>]+>", "", " ".join(memo[1:]).replace("&gt;", ">")).split())
 for p_ in memo: P(p_)
+open(H / "memo.txt", "w").write("\n\n".join(re.sub(r"<[^>]+>", "", m_).replace("&gt;", ">").replace("&lt;", "<") for m_ in memo))
 P(f"<i>(Memo body word count: {words}; target 300-450.)</i>", SM)
 assert 300 <= words <= 450, words
 

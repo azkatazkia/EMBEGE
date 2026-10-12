@@ -1,0 +1,13 @@
+To: Board of Directors | Re: Viet Nam operations | 12 October 2026
+
+Decision: REDESIGN. Proceed with a phased expansion in Viet Nam, released in tranches against energy-cost and demand triggers, rather than one full commitment.
+
+Claim 1 (IMF, Reuters 7 Oct 2026: energy prices, record public debt and AI-investment risks threaten global growth). This is a forward-looking warning in the news, not a Viet Nam finding, and our data cannot test an energy shock directly because no energy-price series was analysed. Historically, Viet Nam's GDP growth averaged 6.3% in 2000-2024 with the lowest volatility of the three countries (SD 1.35 pp vs Philippines 3.36, India 3.03), yet it fell to 2.9% in 2020 and 2.6% in 2021. In our regression, inflation and investment explained almost none of annual growth (R² = 0.003, p = 0.96), so we found no statistical evidence that domestic price pressure alone drives growth; this is association, not causation, from 30 points. Exports equal 98% of GDP (2025), so a global slowdown is the more plausible channel, which we did not model.
+
+Claim 2 (IEA Global EV Outlook 2026, as reported: Viet Nam's EV share of new-car sales reached about 40% in 2025, with far higher shares projected for 2035). We cannot test sales shares with our data, and the 2035 figure is a projection, not an observation. As a loose proxy only, electricity use per capita grew 7.1% a year in 2014-2024, consistent with, but not proof of, rising power demand.
+
+Risk indicators. (1) Inflation tail risk: Viet Nam's CPI inflation failed the Lilliefors normality test (D = 0.211 > 0.161) because of a 23.1% spike in 2008; it exceeded 4% in 14 of 30 years, although volatility since 2015 is low (SD 0.9 pp; 3.3% in 2025). (2) Export uncertainty: 2026 exports are forecast at US$ 502-518 bn with a 95% interval of roughly 447-557 bn.
+
+Contingency. Stage capital in two tranches; release the second only if 2026 exports stay above US$ 447 bn and inflation below 5%; use energy-indexed supplier and customer contracts and hold 4-6 weeks of critical inputs.
+
+Limitations. Annual data cannot capture within-year shocks; ILO labour figures are weighted survey estimates; and the news claims were assessed from published summaries, not the full Reuters and IEA texts.
