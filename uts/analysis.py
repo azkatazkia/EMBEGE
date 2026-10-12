@@ -289,5 +289,52 @@ R["Q8"] = dict(infl_sd_1996_2025=float(i_vn.loc[1996:2025].std()), infl_sd_2015_
                elec_growth_2024=float((el.loc[2024] / el.loc[2023] - 1) * 100),
                years_infl_gt4=int((i_vn.loc[1996:2025] > 4).sum()), years_gt=int(len(i_vn.loc[1996:2025])),
                exports_pct_gdp_last=float(wb("NE.EXP.GNFS.ZS")["VNM"].dropna().iloc[-1]), exports_pct_gdp_last_year=int(wb("NE.EXP.GNFS.ZS")["VNM"].dropna().index[-1]))
+
+# ------------------------------------------------------------------ Q4 extension: Friedman (years as blocks, repeated measures)
+fr = stats.friedmanchisquare(*[gdp[c].values for c in gdp])
+R["Q4"]["friedman"] = dict(chi2=float(fr.statistic), p=float(fr.pvalue), df=2, blocks=25)
+mean_rank_by_year = gdp.rank(axis=1).mean()
+R["Q4"]["friedman"]["mean_ranks"] = {c: float(v) for c, v in mean_rank_by_year.items()}
+
+# ------------------------------------------------------------------ Q7 (public item-level data, Zenodo; no simulated data)
+def reliability(x, odd_cols, even_cols, seed=1):
+    x = x.astype(float); k = x.shape[1]; t = x.sum(axis=1)
+    alpha = lambda z: z.shape[1] / (z.shape[1] - 1) * (1 - z.var(ddof=1).sum() / z.sum(axis=1).var(ddof=1))
+    a = alpha(x); cit = {c: float(stats.pearsonr(x[c], t - x[c])[0]) for c in x}
+    a_del = {c: float(alpha(x.drop(columns=c))) for c in x} if k > 2 else {}
+    o, e = x[odd_cols].sum(axis=1), x[even_cols].sum(axis=1)
+    r = float(stats.pearsonr(o, e)[0]); rho = float(stats.spearmanr(o, e)[0])
+    rng = np.random.default_rng(seed); bs = []
+    for _ in range(2000):
+        z = x.iloc[rng.integers(0, len(x), len(x))]
+        if (z.var(ddof=1) > 0).all(): bs.append(alpha(z))
+    # Guttman split-half (valid for unequal halves)
+    guttman = float(2 * (1 - (o.var(ddof=1) + e.var(ddof=1)) / t.var(ddof=1)))
+    return dict(n=int(len(x)), k=int(k), alpha=float(a), alpha_ci=[float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))],
+                cit=cit, alpha_if_deleted=a_del, r_half=r, spearman_brown=float(2 * r / (1 + r)), rho_half=rho,
+                spearman_brown_rank=float(2 * rho / (1 + rho)), guttman=guttman,
+                mean={c: float(x[c].mean()) for c in x}, sd={c: float(x[c].std(ddof=1)) for c in x},
+                pct_top={c: float((x[c] == x[c].max()).mean() * 100) for c in x},
+                corr=x.corr().round(3).to_dict(), mean_interitem_r=float(x.corr().values[np.triu_indices(k, 1)].mean()),
+                halves=dict(odd=odd_cols, even=even_cols))
+dB = pd.read_csv(RAW / "zenodo_22057938_DATAUPDATE.csv", sep=";"); xB = dB[[f"SCR{i}" for i in range(1, 7)]]
+q7B = reliability(xB, ["SCR1", "SCR3", "SCR5"], ["SCR2", "SCR4", "SCR6"])
+sl = xB.nunique(axis=1) == 1; xB2 = xB[~sl]
+q7B["straightliners"] = int(sl.sum()); q7B["alpha_excl_straightliners"] = reliability(xB2, ["SCR1", "SCR3", "SCR5"], ["SCR2", "SCR4", "SCR6"])["alpha"]
+q7B["duplicate_rows"] = int(dB.duplicated().sum()); q7B["alpha_excl_duplicates"] = reliability(xB[~dB.duplicated()], ["SCR1", "SCR3", "SCR5"], ["SCR2", "SCR4", "SCR6"])["alpha"]
+q7B["alpha_other_blocks"] = {p: float(reliability(dB[[c for c in dB if c.startswith(p)]], [c for c in dB if c.startswith(p)][0::2], [c for c in dB if c.startswith(p)][1::2])["alpha"]) for p in ("SCRMC", "SCA", "BP")}
+dA = pd.read_csv(RAW / "zenodo_20439760_FirmSurvival.csv")
+colA = {c.split("(")[-1].strip().rstrip(")").strip(): c for c in dA.columns if c.strip().endswith(")")}
+xA = dA[[colA[k_] for k_ in ("OR1", "OR2", "OR3", "OR4", "OR5")]].copy(); xA.columns = ["OR1", "OR2", "OR3", "OR4", "OR5"]
+q7A = reliability(xA, ["OR1", "OR3", "OR5"], ["OR2", "OR4"])
+R["Q7"] = dict(B=q7B, A=q7A)
+save(xB, "Q7_SCR_items"); save(xA, "Q7_OR_items")
+fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
+for a_, x_, t_ in ((ax[0], xB, "Dataset B: SCR1-SCR6 (n=248)"), (ax[1], xA, "Dataset A: OR1-OR5 (n=247)")):
+    cm_ = x_.corr().values; im = a_.imshow(cm_, vmin=-1, vmax=1, cmap="RdBu_r"); a_.set_xticks(range(len(x_.columns)), x_.columns, rotation=45); a_.set_yticks(range(len(x_.columns)), x_.columns); a_.set_title(t_, fontsize=9)
+    for i_ in range(len(cm_)):
+        for j_ in range(len(cm_)): a_.text(j_, i_, f"{cm_[i_, j_]:.2f}", ha="center", va="center", fontsize=7)
+plt.tight_layout(); plt.savefig(FIG / "Q7.png", dpi=150); plt.close()
+
 json.dump(R, open(HERE / "results.json", "w"), indent=1, default=float)
 print(json.dumps(R, indent=1, default=float)[:200000])

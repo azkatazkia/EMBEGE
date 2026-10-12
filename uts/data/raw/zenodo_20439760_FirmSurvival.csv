@@ -1,0 +1,249 @@
+Number of employees,Firm age (years),Industry sector,Ownership,Our firm uses real-time digital systems to monitor supply chain activities. (DSC1),We utilize advanced analytics to forecast demand and disruptions. (DSC2),Our suppliers are digitally integrated with our internal systems. (DSC3),Digital platforms improve coordination with supply chain partners. (DSC4),Data-driven decision-making guides supply chain planning. (DSC5),Our firm implements reverse logistics practices. (CSC1),We engage in recycling or remanufacturing activities. (CSC2),Waste reduction is integrated into supply chain operations. (CSC3),We prioritize reuse of materials and resources. (CSC4),Environmental sustainability guides supply chain design decisions. (CSC5),"Our firm can quickly recover from supply chain disruptions (e.g., supplier delays, transportation breakdowns, sudden demand spikes, or border closures). (OR1)","Our operations remain stable during unexpected shocks (e.g., pandemics, raw material shortages, regulatory changes, or geopolitical disruptions). (OR2)","We can rapidly reconfigure operational processes when disruptions occur (e.g., switching suppliers, adjusting production schedules, rerouting logistics, or reallocating inventory). (OR3)","Our supply chain maintains business continuity under uncertainty (e.g., maintaining deliveries despite capacity constraints or supplier failures). (OR4)","We effectively adapt to environmental volatility (e.g., fluctuating customer demand, price instability, technological changes, or policy shifts). (OR5)","Our firm maintains stable cash flow during disruptions (e.g., revenue declines, delayed customer payments, supply interruptions, or sudden cost increases). (FR1)","We have sufficient liquidity to absorb financial shocks (e.g., access to credit lines, cash reserves, or emergency financing during crises). (FR2)","Our debt obligations remain manageable under stress conditions (e.g., during reduced sales, higher interest rates, or tightening financial markets). (FR3)","Our firm can sustain operations during prolonged economic downturns (e.g., extended market contractions, industry slowdowns, or global crises). (FR4)","Financial risks are actively monitored and controlled (e.g., regular cash flow forecasting, risk assessment systems, and financial contingency planning). (FR5)","Our investment decisions are aligned with long-term strategic objectives (e.g., growth plans, sustainability goals, digital transformation, or market expansion strategies). (IE1)
+","We avoid excessive or overly risky investments during uncertain periods (e.g., economic downturns, volatile demand conditions, or financial market instability). (IE2)","Capital expenditures are carefully evaluated before approval (e.g., through financial feasibility analysis, risk assessment, and scenario planning). (IE3)","Resources are allocated to projects with clearly defined and measurable expected returns (e.g., ROI targets, productivity improvements, or cost reduction outcomes). (IE4)","Investment levels are adjusted according to changing market conditions (e.g., scaling investments up during growth phases or postponing projects during market contractions). (IE5)","Our firm is financially positioned to withstand long-term economic uncertainty (e.g., revenue volatility, credit tightening, or capital market instability). (FS1)","We are confident in sustaining financial performance and meeting financial obligations over the next five years (e.g., maintaining profitability, liquidity, and solvency ratios). (FS2)","Our competitive position remains financially strong despite market volatility (e.g., stable margins, cost control, and sustained revenue streams). (FS3)","The firm can endure prolonged operational or financial crises without severe financial distress (e.g., avoiding cash flow shortages, covenant breaches, or restructuring risks). (FS4)","Our organization demonstrates long-term financial sustainability (e.g., consistent earnings generation, prudent leverage management, and disciplined capital allocation). (FS5)",Access to external financing is difficult for our firm. (FC1),We rely heavily on internal funds for investments. (FC2),Credit availability limits our expansion plans. (FC3),Financial institutions perceive our firm as high risk. (FC4),Obtaining loans or external funding is challenging for our firm. (FC5)
+5=1500+,4 = >20,"Logistics & Supply Chain (e.g., transportation, warehousing, distribution)","1 = Private,",6,6,6,6,5,5,6,6,6,7,6,5,6,6,6,6,6,5,,6,6,5,6,6,6,6,6,6,6,6,2,2,2,3,3
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,6,7,6,7,6,5,7,6,7,6,7,6,7,7,6,5,6,7,6,7,6,7,7,5,7,6,7,7,6,6,7,6,7,7
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,6,6,7,6,7,7,6,6,7,6,7,6,7,5,7,7,6,7,7,6,7,6,7,5,7,6,6,7,6,7,7,6
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,7,6,7,6,7,7,6,7,5,7,6,6,7,6,7,6,6,7,6,7,7,6,7,6,7,6,6,7,5,7,6,6
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,6,7,6,7,6,7,6,7,7,6,7,6,6,7,6,7,7,6,7,5,7,6,7,7,6,7,6,5,7,6,6,7,6,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,6,7,6,7,6,6,7,6,7,7,5,7,6,6,7,6,7,6,6,7,6,7,7,6,7,6,6,5,7,6,7,6,7,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",7,6,7,6,6,7,5,7,6,6,7,5,7,6,6,7,6,7,7,5,7,6,7,7,6,7,6,7,6,6,7,6,7,6,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,6,7,5,7,6,7,6,7,6,7,6,6,7,6,7,5,7,6,7,6,7,7,6,7,6,5,7,6,6,7,6,7,6,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",6,6,7,6,7,5,7,6,7,7,6,7,6,7,6,7,5,7,6,6,7,6,7,5,7,6,6,7,6,7,6,6,5,7,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,6,7,7,6,7,6,7,7,6,7,6,5,7,6,6,7,6,7,6,7,7,6,7,6,7,6,6,7,5,7,6,7,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,6,7,6,7,7,6,7,6,6,7,6,7,6,6,7,6,7,5,7,6,7,6,6,7,6,6,7,6,7,5,7,7,6,7
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",5,7,7,6,7,6,7,6,7,7,6,7,6,6,7,6,7,6,7,7,6,7,6,7,7,6,7,6,7,6,6,7,6,7,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,7,6,7,6,7,6,7,6,6,5,7,6,7,7,6,7,6,7,6,7,6,7,6,6,7,6,7,6,6,7,6,7,6,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"2 = Public/Listed,",7,6,7,6,6,7,6,7,6,7,6,7,7,6,7,6,7,5,7,7,6,7,6,7,7,6,7,6,7,5,7,6,6,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",7,7,6,7,6,7,5,7,6,6,6,6,6,7,7,5,7,6,6,7,6,7,6,5,7,6,7,7,6,7,6,6,7,6,7
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,6,7,7,6,7,6,7,6,7,6,7,6,6,6,7,7,5,7,6,7,6,7,6,7,6,7,6,6,7,5,7,6,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,6,7,7,6,7,5,7,6,7,7,6,7,7,5,7,6,6,7,6,7,6,7,6,6,7,6,7,7,6,7,6,6,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,5,7,6,7,7,6,7,6,6,7,6,7,6,6,7,5,7,6,6,7,6,7,6,6,7,6,7,6,5,7,6,6,7,6
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,6,6,7,6,7,5,6,7,7,6,7,6,5,7,6,7,6,6,7,5,7,6,7,7,6,6,7,6,7,6,7,7,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",7,6,7,6,7,6,5,7,6,7,6,7,6,6,7,5,7,6,7,6,7,6,6,7,6,5,7,6,7,7,7,6,7,5,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,7,6,7,6,7,7,6,7,6,6,5,7,6,7,7,6,7,6,7,7,6,7,6,5,7,6,7,6,5,7,6,7,7
+1 = <50,1 = <5,Agriculture & Food Processing,3 = Mixed,6,5,7,6,7,6,7,6,7,7,6,7,7,5,7,6,6,7,6,5,7,6,7,6,6,7,6,7,5,7,6,7,6,7,7
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,6,7,6,7,7,6,7,5,7,6,7,7,6,7,6,7,7,6,7,6,7,7,6,7,7,6,7,6,7,7,6,7,5,7,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,6,7,6,6,7,6,7,6,5,7,6,7,6,7,6,6,7,6,7,6,7,5,7,6,7,7,6,7,6,7,5,7,6,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,7,6,7,6,7,5,7,6,7,6,6,7,6,7,5,7,6,7,7,6,7,6,6,7,6,7,6,7,7,5,7,6,7,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,6,6,7,5,7,6,6,7,6,7,7,6,7,5,7,6,6,7,6,7,7,6,7,7,6,7,6,7,5,7,6,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,7,6,7,5,7,6,7,7,6,7,6,6,5,7,7,6,7,6,7,5,7,7,6,7,5,7,6,6,7,6,7,6,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,7,6,7,6,6,7,6,7,5,7,6,7,7,6,7,6,5,7,5,6,6,7,6,7,5,7,6,7,6,7,5
+1 = <50,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,7,6,6,7,5,7,6,6,7,5,7,7,6,7,7,6,7,6,5,7,6,6,7,6,7,6,6,7,5,7,6,7,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,5,7,6,7,7,6,7,6,7,7,6,7,5,6,7,6,7,5,7,7,6,7,6,6,7,5,7,7,6,7,6,7,6
+1 = <50,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,6,7,6,7,5,5,,6,7,7,6,7,6,7,7,5,7,6,7,7,6,7,6,5,7,6,7,7,6,7,6,7,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",7,7,6,7,6,5,7,6,7,7,6,6,5,7,6,6,7,6,7,7,6,7,6,7,7,6,7,6,7,5,7,6,7,7,5
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,7,6,7,6,7,5,6,6,7,6,7,6,5,7,6,7,5,7,5,6,5,7,7,6,7,5,7,7,6,7,5
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,6,7,6,7,6,6,7,5,7,6,5,6,7,5,6,6,7,6,7,7,6,7,6,5,7,5,7,5,6,7,5,7,7,6
+1 = <50,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,6,7,7,6,7,6,7,5,7,6,7,5,7,6,6,7,6,7,5,6,6,5,7,6,6,7,6,6,7,6,7,5,7
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,7,7,5,7,6,7,7,6,7,5,7,6,6,7,6,7,5,7,6,7,5,7,6,7,6,7,7,6,5,7,6,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",6,7,6,7,5,7,5,7,6,6,7,6,7,5,7,6,7,5,7,7,6,7,5,7,6,7,7,5,7,6,7,6,6,7,6
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",6,6,7,6,7,5,5,7,6,7,6,7,5,7,7,6,7,6,7,5,7,6,7,5,7,6,6,7,5,6,7,5,5,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",6,7,6,7,5,7,6,7,6,7,6,5,7,6,7,5,5,6,5,7,6,7,6,5,7,6,7,6,7,5,6,7,7,6,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,6,7,5,7,6,7,6,6,7,5,7,6,7,6,5,7,6,7,5,7,6,7,7,6,7,6,7,5,6,6,7,6,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,,7,6,7,5,7,6,7,6,7,6,6,7,5,7,5,7,6,6,5,7,7,5,6,7,7,6,7,5,6,6,7,6,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,5,6,7,5,7,6,7,6,7,5,7,6,6,7,6,7,6,7,5,7,6,7,6,7,6,7,5,7,6,7,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,7,6,7,5,7,6,7,5,5,7,6,7,5,7,6,6,7,6,7,5,6,5,7,6,7,7,6,7,5,7,6,7,5,7
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,6,7,6,7,7,6,7,6,7,5,7,6,7,5,5,6,7,6,6,7,5,7,6,7,5,6,6,7,6,7,5,7,6,7,7
+1 = <50,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,7,5,6,7,7,6,7,5,7,6,7,6,6,7,6,7,6,5,7,6,7,6,6,7,5,7,6,7,5,7,6,6,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,6,7,6,6,7,6,7,6,7,5,7,5,7,6,7,6,7,6,7,5,5,7,6,7,6,7,5,7,6,7,7,6,7,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,5,5,7,6,7,6,7,5,7,6,7,7,5,7,6,7,5,7,6,6,7,6,7,5,5,6,7,5,7,7,6,7,5,7,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,6,7,7,6,7,5,7,6,7,6,7,5,7,6,6,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,5,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,7,6,7,5,7,6,6,7,6,5,7,5,7,6,6,7,6,7,6,6,7,5,7,6,6,7,6,7,5,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,6,7,7,5,7,6,7,5,7,6,7,6,6,5,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,6,7,6,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,6,7,5,7,6,7,5,,6,7,6,7,6,6,7,6,7,5,7,6,7,6,7,5,7,5,7,5,6,7,5,7,6,7
+1 = <50,3 = 11–20,Agriculture & Food Processing,3 = Mixed,6,5,7,6,7,6,5,7,6,7,5,7,6,7,6,7,5,7,6,7,6,7,5,7,5,7,6,7,6,6,7,6,7,5,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",5,7,6,7,6,7,5,7,6,7,6,6,7,6,5,7,7,6,7,5,7,6,7,5,5,7,6,7,5,7,6,6,7,6,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,6,7,7,5,7,6,7,5,7,7,6,7,5,7,6,6,7,6,7,5,7,6,6,7,5,7,6,6,7,6,7,5,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,6,7,7,6,5,7,6,7,5,7,6,7,5,6,7,5,7,6,7,6,7,6,6,7,5,7,6,6,7,6,7,5,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,7,6,7,5,7,6,7,5,7,6,7,6,5,7,6,7,6,7,7,5,7,6,7,5,6,6,7,6,6,5,7,5,6,5
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,6,6,7,6,7,6,6,7,6,7,7,6,5,7,6,7,7,5,7,6,7,6,7,7,6,7,5,6,7,6,7,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,6,6,5,7,6,6,7,6,5,5,7,6,7,6,6,7,5,5,7,6,6,7,5,7,6,6,5,7,6,7,5,6,7
+1 = <50,3 = 11–20,Agriculture & Food Processing,"1 = Private,",6,7,6,7,7,5,7,6,7,5,6,6,7,6,7,5,7,6,7,6,7,7,5,7,6,7,5,7,7,6,7,7,6,7,5
+1 = <50,3 = 11–20,Agriculture & Food Processing,"1 = Private,",6,5,7,6,7,6,6,5,7,6,5,5,7,6,7,5,7,6,5,5,7,6,7,6,7,6,7,7,5,6,7,5,7,6,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,6,7,6,5,7,5,7,6,6,7,5,7,6,5,7,7,6,7,5,6,7,5,7,7,6,7,5,7,6,7,7,5,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,5,7,6,7,6,7,6,6,7,5,7,5,6,7,6,7,6,6,7,5,7,5,7,6,6,7,6,7,5,7,6,6,7
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,6,5,7,6,6,7,6,5,7,7,6,7,6,5,7,6,7,6,5,5,7,5,7,6,5,7,7,5,6,6,7,6,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,5,6,6,7,6,6,7,6,7,7,6,7,5,5,6,6,6,7,7,6,6,5,6,7,6,7,6,5,6,7,7,5,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,6,7,6,7,5,5,7,6,7,5,6,6,7,5,7,6,7,7,6,7,5,7,6,6,7,5,7,6,7,7
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,5,7,6,6,7,6,7,5,7,6,7,6,7,7,5,7,6,7,5,7,6,7,5,5,7,6,7,6,6,7,6,7,6,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,6,5,7,5,7,6,7,7,7,7,6,5,6,7,7,5,7,6,6,5,7,7,6,7,7,6,7,6,6,7,6,,5,7
+1 = <50,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",7,7,6,7,5,7,6,7,6,6,7,5,7,6,7,6,6,7,5,7,6,7,7,6,7,5,5,7,6,,5,7,6,7,6
+1 = <50,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,6,7,7,6,7,6,7,6,7,7,7,6,5,5,7,7,7,6,7,6,7,6,5,6,5,7,6,6,7,7,5,6,7
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,5,7,5,7,6,7,5,7,7,6,7,6,5,7,6,7,7,6,7,6,5,7,6,6,7,6,5,7,6,7,5,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,6,5,7,5,6,7,5,7,7,6,6,5,7,7,7,6,5,5,7,6,7,6,7,6,7,6,7,7,7,6,5,6,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,6,7,6,5,7,6,5,7,7,7,6,7,5,7,6,6,7,6,6,7,5,7,6,7,6,6,7,6,6,7,6,6,6
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,6,7,6,5,6,6,7,6,7,7,5,6,7,6,7,7,6,6,7,6,6,5,7,6,7,6,7,5,7,7,5,6,6
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,6,5,6,6,7,5,7,7,6,5,7,6,6,6,7,6,5,5,7,6,6,7,7,6,7,5,7,6,7,6,7,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,6,5,7,7,7,5,6,5,6,7,5,7,5,7,5,7,5,6,6,6,7,5,6,6,7,6,5,7,7,6,7,5,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,6,5,7,7,7,6,7,6,7,6,7,5,7,6,6,6,7,6,7,6,7,5,7,5,7,6,5,7,7,6,7,5,7
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,6,7,5,7,6,7,6,5,6,7,7,5,6,6,7,7,5,6,5,7,7,6,5,7,7,7,5,6,5,7,7,6,6,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,7,6,7,6,5,6,7,7,6,7,5,7,6,6,5,6,7,6,7,7,6,6,5,7,6,7,6,6,5,7,7,6,6,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,5,7,7,7,5,6,5,6,7,7,6,7,7,7,5,6,7,7,7,6,6,7,6,7,5,6,7,7,7,5,6,5
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,7,5,6,6,7,5,5,6,7,7,6,6,7,7,7,5,6,5,6,7,6,7,6,7,7,5,6,5,7,7,6,7,5
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,"2 = Public/Listed,",6,7,7,6,7,6,6,7,6,7,5,7,6,7,7,5,7,5,7,7,6,7,5,7,6,7,6,7,5,7,6,7,5,7,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",7,7,6,7,5,6,7,7,6,7,7,7,6,7,7,6,7,6,5,7,7,7,5,6,6,6,7,5,6,5,7,7,5,6,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",,7,5,7,6,7,7,6,6,5,6,7,5,6,7,7,7,6,5,7,6,7,6,7,7,7,6,7,6,5,7,7,6,5,5
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,5,7,6,7,6,7,5,7,6,7,6,7,5,6,7,6,7,5,7,6,7,6,6,7,5,7,6,7,5,5,6,5,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,5,7,6,7,7,6,7,6,7,6,5,7,5,7,7,6,5,7,7,7,6,5,7,7,7,5,5,6,7,7,5,6,7
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,5,6,7,7,6,5,6,6,7,6,7,5,7,7,6,7,6,5,6,7,6,5,7,7,6,5,7,7,6,6,5,7
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,5,7,5,7,7,6,7,5,6,7,6,5,7,7,7,5,6,5,7,7,6,5,6,7,6,7,5,6,7,6,7,5,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,7,6,7,6,7,5,7,6,7,7,6,7,5,7,6,7,7,5,7,6,7,6,7,5,7,6,7,6,7,7,5,7,6,7,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,6,6,7,7,5,6,5,6,7,6,7,5,7,7,7,6,5,6,7,6,7,5,6,7,6,7,5,7,7,5,6,5
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,6,7,5,6,7,5,7,5,7,7,6,7,6,7,5,5,7,6,7,6,6,7,5,6,7,6,7,5,7,7,5,7,6
+1 = <50,2 = 5–10,Agriculture & Food Processing,"1 = Private,",7,6,7,6,6,7,5,7,6,6,7,6,7,6,6,7,5,7,5,7,6,7,5,7,6,7,7,6,7,6,7,7,6,7,6
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,5,6,5,7,7,6,7,5,7,7,5,7,5,6,7,6,7,5,7,7,7,5,6,6,7,6,7,5,7,7,6,5,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,5,7,6,7,7,6,7,5,7,6,7,5,7,6,7,6,7,6,7,5,7,6,6,7,6,7,5,7,6,6,7,6,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,7,6,7,5,6,7,6,7,5,6,5,6,7,6,6,5,7,7,6,6,5,7,7,5,6,5,7,7,6,5,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",6,6,7,6,7,5,7,6,7,7,6,7,6,7,5,7,6,7,5,7,6,6,7,6,7,6,6,7,6,7,5,7,6,7,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,6,7,5,6,7,6,5,7,7,7,6,5,7,5,7,6,7,5,7,7,5,7,6,6,7,5,6,5,7,7,6,6,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,5,7,6,6,7,7,5,5,7,6,5,7,6,6,7,6,5,7,7,7,5,6,5,6,7,6,5,6,7,7,5,6,6
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,5,7,6,7,6,7,6,7,5,7,6,7,6,6,7,6,7,5,6,7,7,6,7,5,6,7,5,7,6,7,7,6,7,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,7,5,6,5,6,5,7,6,7,7,5,6,5,6,7,6,7,5,7,7,5,6,7,6,7,5,7,5,7,6,7,5,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,5,6,6,7,5,6,7,7,6,5,7,6,6,7,5,6,5,7,6,7,5,5,5,7,6,7,5,6,7,6,7,5
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,7,6,5,7,5,7,5,6,7,6,7,5,7,5,7,5,7,6,7,5,7,6,7,5,7,7,6,7,6,7,5,6
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,6,7,6,7,6,6,7,5,7,6,6,7,6,5,7,6,6,7,5,7,6,5,7,6,7,6,7,6,7,7
+1 = <50,2 = 5–10,Agriculture & Food Processing,"1 = Private,",7,7,6,6,5,7,7,4,7,6,6,7,5,6,5,7,7,5,7,6,6,7,5,6,7,7,6,7,5,6,7,7,6,5,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,5,7,5,7,7,6,5,7,7,6,5,7,6,6,7,5,6,5,7,6,5,6,7,6,7,6,5,5,6,7,6,5
+1 = <50,3 = 11–20,Agriculture & Food Processing,"2 = Public/Listed,",6,7,6,7,6,7,6,7,5,7,6,7,6,5,7,6,7,6,7,7,5,7,6,7,5,7,6,7,5,6,7,7,6,7,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,6,7,5,7,6,7,6,7,5,7,6,7,6,7,5,7,5,6,6,7,6,7,6,7,5,7,5,6,7,6,7,5,7,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,5,6,5,7,6,7,5,6,6,7,6,5,6,7,6,5,7,6,6,7,5,7,6,7,7,6,5,6,7,7,5,6,5
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,7,6,7,5,7,6,7,6,7,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,7,6,7,7,5,7,6,7,5
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,5,6,5,6,7,5,6,5,7,7,6,5,6,6,7,5,7,5,5,7,5,6,5,5,7,5,7,6,7,7,5,6,5
+1 = <50,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,7,6,7,5,7,6,5,7,5,6,5,6,5,7,5,7,6,5,7,5,6,5,7,6,7,7,5,6,5,7,6,5,6,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,6,5,6,6,7,5,6,5,7,7,6,5,6,5,6,5,7,6,7,6,5,7,6,6,7,5,6,5,7,7,6,5,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,5,7,6,6,7,6,6,5,7,7,5,6,5,6,7,6,5,6,7,6,5,6,5,5,7,5,6,6,7,7,5,6,5
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,6,6,6,5,6,5,7,5,6,7,5,6,5,7,7,6,5,7,6,7,5,6,7,7,6,5,7,5,7,7,6,7,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,7,7,5,7,5,7,5,6,6,7,7,6,5,7,6,7,5,6,5,7,7,5,6,5,6,7,5,7,5,6,6,5,7,6
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,5,6,5,7,6,6,7,5,7,6,7,7,7,5,6,5,7,5,6,5,7,7,5,6,7,5,6,,5,7,7,6,4,5,5
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,7,6,7,5,5,6,7,5,7,7,7,5,7,1,6,7,5,7,6,7,6,7,5,6,6,7,6,5,7,7,6,6,6,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,7,5,7,6,7,5,7,6,6,7,6,5,7,6,7,5,5,7,6,7,6,7,6,7,7,6,7,5,7,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,7,6,5,7,5,6,7,6,6,5,7,6,7,5,5,6,5,7,5,6,7,7,6,5,6,6,7,6,7,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,7,6,7,5,6,6,7,6,5,6,6,7,5,7,5,7,7,6,5,6,5,7,5,7,6,7,7,5,7,5,6,7,5,6,7
+2 = 50–249,1 = <5,"Logistics & Supply Chain (e.g., transportation, warehousing, distribution)",3 = Mixed,6,6,5,7,6,5,5,7,6,7,6,5,6,6,7,7,6,5,7,6,6,6,5,7,7,6,6,5,7,6,6,6,5,7,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,6,7,7,5,6,6,7,5,7,6,7,6,7,5,6,5,6,5,7,6,7,5,7,6,6,5,7,6,5,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,5,7,5,6,7,7,5,6,7,7,5,6,5,6,7,5,7,6,7,6,7,5,5,6,7,5,6,5,7,7,6,5,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,5,7,6,7,6,6,7,6,6,6,5,7,6,5,6,6,7,6,7,7,7,5,7,6,5,6,6,5,7,7,6,7,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,7,5,6,6,7,5,7,6,7,5,6,7,5,5,7,6,6,6,7,5,7,6,7,7,7,5,6,5,7,6,7,5,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,5,6,5,5,6,6,7,6,6,6,5,7,6,5,6,6,7,6,5,6,6,7,6,5,6,6,7,6,5,5,7,6,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,7,5,7,7,7,6,6,6,7,6,7,5,7,6,7,5,6,6,7,5,7,5,7,7,5,7,5,7,7,6,5,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,6,5,7,6,6,6,5,7,6,6,7,6,7,6,5,6,6,7,6,6,5,7,6,7,5,6,6,7,6,5,6,6,5,7
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,6,5,7,6,5,7,7,6,7,6,5,7,6,7,6,5,6,6,7,5,6,6,5,7,7,6,5,7,6,5,6,6,7,6
+1 = <50,2 = 5–10,,"1 = Private,",6,6,5,7,6,5,7,7,6,7,6,5,6,6,7,5,7,7,6,7,7,5,6,6,7,5,6,6,7,6,5,5,6,7,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,5,7,6,7,5,6,6,7,6,6,6,5,7,6,6,6,5,7,7,5,7,6,7,6,6,6,7,7,6,5,6,5,7,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,5,6,7,6,7,5,6,7,7,5,6,5,6,7,6,5,7,7,6,7,5,7,7,6,7,5,6,7,7,5,7,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,6,7,5,6,5,5,7,7,5,6,6,7,6,7,5,7,6,7,5,6,6,7,5,6,7,7,6,7,5,6,6,7,5,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,7,7,6,7,5,7,6,7,6,5,7,6,7,5,7,6,6,7,5,7,5,7,6,7,6,7,5,7,6,7
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,5,6,7,6,5,7,5,6,7,5,7,6,7,7,5,7,5,7,6,7,6,7,7,6,7,5,7,7,7,7,5,6
+1 = <50,1 = <5,Agriculture & Food Processing,3 = Mixed,7,,5,7,6,5,5,7,6,7,6,6,5,7,6,6,6,7,7,6,5,7,6,7,6,6,6,5,7,6,6,6,5,7,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,7,6,7,6,7,7,6,7,6,7,7,5,7,6,7,5,7,7,6,7,5,7,6,7,7,5,7,6,7,6,7
+2 = 50–249,3 = 11–20,"Financial Services (e.g., banking, insurance, investment firms)","1 = Private,",6,6,5,7,6,5,6,5,7,6,7,7,6,7,6,6,6,5,7,6,6,6,5,7,7,5,6,5,5,7,7,6,7,6,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,5,6,7,5,6,5,7,6,7,5,7,6,7,6,5,7,6,7,7,5,7,5,6,7,5,6,7,7,7,5,7,6
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",6,7,6,7,7,5,7,6,7,5,7,6,7,5,7,6,7,6,5,7,6,6,7,6,7,5,7,6,7,6,7,7,6,7,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,5,7,5,6,7,5,7,6,7,6,7,5,6,6,7,6,7,5,6,7,5,7,6,7,5,7,5,6,7,7,6,7,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,6,7,7,6,7,6,7,5,7,6,7,5,7,6,7,5,7,5,7,6,7,6,6,7,5,7,6,7,5,7,6,7,6
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,7,6,7,5,6,7,5,7,6,7,7,5,7,6,6,7,5,7,6,7,7,5,7,6,6,7,5,7,6,6,7,5,7,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,5,7,6,7,7,6,6,5,7,6,7,5,6,6,7,6,7,6,7,6,7,6,5,6,7,5,7,6,7,7,6,5,7
+1 = <50,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,7,6,7,5,5,7,7,6,7,5,7,6,7,6,6,7,7,5,6,5,6,7,5,7,5,6,6,7,5,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",7,6,7,5,7,5,7,6,7,7,6,7,5,7,6,7,7,5,7,6,7,5,7,6,7,6,5,7,6,7,5,6,5,7,7
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,6,5,7,6,6,5,6,6,7,5,6,6,5,7,7,6,6,5,7,7,6,7,7,6,5,6,6,7,6,5,7,6,7,6
+2 = 50–249,1 = <5,"Logistics & Supply Chain (e.g., transportation, warehousing, distribution)","1 = Private,",7,6,5,7,6,6,7,5,7,6,7,6,5,7,5,6,7,5,7,6,7,6,7,5,7,6,7,5,7,6,7,6,7,5,5
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,5,6,7,6,5,6,6,7,6,6,6,5,7,6,6,7,5,7,6,5,6,6,5,7,5,7,6,7,6,5,6,6,5,6
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,7,5,7,6,7,5,7,6,7,5,7,5,7,6,7,5,5,5,7,5,6,7,7,7,5,6,7,6,7,5,6,5
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,6,7,7,5,7,6,7,7,7,5,7,6,6,7,6,7,5,7,6,7,6,7,7,5,7,6,7,7,5,5,7,6,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,5,6,6,6,7,5,7,7,6,7,5,7,6,7,6,7,5,7,6,7,6,7,6,5,6,7,5,7,6,7,5,6
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,5,7,6,6,6,5,7,6,5,6,6,7,6,7,6,6,7,6,6,6,5,7,6,6,7,7,6,5,6,6,7,5,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",6,7,6,7,7,6,7,6,7,6,7,5,7,5,7,6,6,,6,7,5,7,6,7,7,6,7,6,7,7,6,7,6,7,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,7,6,7,5,5,6,7,7,5,6,7,6,7,5,7,7,6,7,5,6,6,7,5,7,6,7,6,7,5,7,7,6,7,5,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,5,7,6,7,7,6,7,6,7,7,5,7,6,7,6,7,7,5,7,6,7,7,6,7,6,7,5,7,6,6,7,6,7,6,6
+2 = 50–249,1 = <5,"Financial Services (e.g., banking, insurance, investment firms)","1 = Private,",7,5,5,7,6,5,6,6,7,6,6,5,7,7,6,5,6,6,7,6,5,5,7,6,7,6,5,5,7,6,6,5,7,6,7
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,5,6,6,7,6,6,5,7,6,7,5,6,6,7,6,6,5,6,7,7,7,6,7,6,7,6,7,6,7,6,5,5,6,7,6
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,5,7,7,6,6,7,5,7,5,7,6,5,7,6,6,7,5,6,5,7,6,5,7,6,7,6,5,7,6,7,6,7,5,7
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,5,7,6,7,6,5,7,6,7,5,6,7,6,7,6,6,5,5,6,7,6,5,7,6,5,6,6,7,6,6,5,7,6,7
+1 = <50,3 = 11–20,Agriculture & Food Processing,"1 = Private,",7,5,7,5,6,7,6,7,5,6,7,6,5,7,6,7,6,7,5,6,6,7,5,6,6,7,6,5,7,6,7,6,5,6,5
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,5,6,7,6,7,7,6,7,6,7,5,5,7,6,7,5,6,7,6,5,7,5,7,5,6,5,6,7,6,7,5,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,6,5,7,5,5,6,6,7,6,6,7,7,6,7,5,6,6,7,6,6,5,7,6,7,7,6,5,7,6,5,6,6,7,6
+2 = 50–249,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,6,7,5,6,7,6,7,5,6,7,6,5,6,5,6,7,5,7,6,6,5,6,5,6,7,6,7,5,6,6,7,5,7,6
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,5,7,6,7,7,5,7,6,7,7,6,7,5,6,6,6,7,6,7,6,7,5,7,5,7,6,7,5,7,5,7,6,7
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,7,6,7,5,6,7,6,7,5,5,7,7,6,7,5,7,6,7,5,6,7,6,5,7,6,6,7,6,6,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,5,5,7,6,7,6,5,7,6,7,6,7,5,7,5,6,5,6,6,7,7,6,7,7,6,5,6,6,5,5,5,6,7,5,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,6,7,7,5,7,6,7,5,7,7,5,7,6,7,7,6,7,6,7,5,7,6,6,7,6,7,6,6,7,5,7,6,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,5,7,6,7,5,6,6,7,6,6,5,7,6,7,5,6,6,7,6,5,6,6,7,6,6,5,6,6,7,6,5,5,7,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",7,6,7,6,7,5,7,6,7,6,7,5,7,6,7,6,7,6,7,7,6,7,5,7,6,7,7,5,7,6,7,5,7,6,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,5,6,7,6,7,6,7,7,6,7,5,6,6,7,5,6,7,7,6,7,6,5,6,7,7,5,7,7,6,7,6,7
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",6,5,7,5,7,5,6,7,6,5,5,5,7,6,7,6,5,7,6,7,5,6,7,6,7,6,5,6,6,5,,7,7,6,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,6,7,5,7,5,7,6,7,7,6,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,6,7,5,7,7
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,7,5,6,6,7,5,6,6,7,6,5,7,6,7,6,5,7,6,6,7,5,6,7,7,6,7,5,6,7,6,7,5,6
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,5,7,6,7,6,7,7,5,7,5,7,6,7,7,6,7,6,5,7,6,7,6,7,6,7,6,6,5,7,6,7,7
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,6,7,7,6,7,6,7,7,5,7,6,7,5,6,7,5,7,6,5,5,7,5,6,7,7,6,7,5,7,6,7,6,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,5,7,5,7,6,7,7,6,7,5,7,6,7,5,7,6,6,7,6,7,5,5,7,6,7,5,5,7,6,7,5,6,5,7,5
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,6,7,7,5,7,6,7,7,6,5,7,6,7,5,7,6,7,5,7,7,6,7,6,7,7,6,7,6,5,7,6,7,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,5,7,5,5,7,6,7,6,5,7,6,7,6,6,7,6,7,6,7,5,7,6,7,7,5,7,6,7,6,7,6,7,6,6
+1 = <50,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,6,7,6,7,7,5,7,6,6,6,5,6,5,7,6,7,5,7,6,7,7,6,7,5,7,6,7,5,7,6,6,7,6,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,7,6,7,5,6,5,7,5,6,6,7,6,7,5,7,6,7,5,7,6,7,5,7,6,7,6,7,5,7,5,7,6,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,6,5,7,6,7,5,7,6,7,5,7,6,7,7,5,7,6,6,5,7,5,7,6,7,6,6,5,7,6,7,7,6,7,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,6,7,7,6,7,6,5,7,6,7,6,7,7,5,7,6,7,5,7,6,7,5,7,6,6,7,5,7,5,7,6,7,7
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,7,7,5,7,5,7,6,6,7,5,7,6,7,5,7,6,5,7,5,7,6,7,6,7,6,7,5,7,7,6,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"1 = Private,",6,5,7,6,7,6,6,7,6,7,5,5,7,6,7,6,7,5,7,6,7,7,6,7,5,6,7,6,7,7,5,7,6,7,6
+1 = <50,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",5,7,6,7,7,5,7,6,7,6,5,7,6,7,7,5,7,6,7,5,7,6,7,5,7,6,6,7,6,7,5,7,6,7,6
+2 = 50–249,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,6,6,7,7,6,7,5,7,6,7,5,6,7,6,7,7,5,7,6,7,5,6,7,6,7,5,6,7,6,6,7,5
+2 = 50–249,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,5,6,6,7,5,6,5,7,7,6,5,6,7,6,7,5,6,6,7,7,6,5,5,7,7,5,7,7,7,6,5,6
+1 = <50,1 = <5,Agriculture & Food Processing,"1 = Private,",7,5,7,5,7,6,7,6,5,6,7,6,7,5,6,6,6,7,6,5,7,6,7,6,5,6,7,5,7,6,5,5,7,6,7
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",7,6,7,5,6,7,6,5,6,5,5,7,6,6,7,6,7,5,6,6,7,7,5,6,7,6,7,6,7,5,7,6,7,5,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,6,5,6,7,5,6,6,7,6,7,5,5,7,6,7,6,5,6,7,6,5,7,7,7,5,7,6,6,7,6,6,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,6,7,6,7,5,5,7,6,5,5,6,7,6,5,7,6,5,6,5,7,7,6,7,6,5,6,7,6,5,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,6,5,5,7,6,5,7,6,7,6,5,6,7,7,5,7,6,6,7,7,6,5,6,7,5,6,6,7,6,7,6,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,6,5,5,7,6,7,5,7,7,6,5,6,6,6,7,7,5,7,6,7,5,6,7,7,5,5,6,7,5,6,5,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,6,7,6,5,5,7,7,7,5,7,6,7,5,6,6,7,5,6,7,5,7,5,6,6,7,5,7,6,7,7,7,5,6,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,5,7,6,6,5,7,7,7,6,7,5,7,5,6,7,7,7,5,6,6,7,6,5,6,7,6,7,5,6,6,7,7,5,6
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",7,5,7,6,5,6,7,6,5,7,7,6,7,5,6,6,7,7,6,5,6,5,7,7,7,7,5,6,7,6,6,5,6,5,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,5,5,7,6,5,7,5,7,6,6,6,7,5,6,5,7,6,6,5,7,6,7,6,7,5,5,6,7,6,7,5
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,6,7,7,6,6,7,7,5,6,7,6,5,7,6,6,7,7,5,6,7,6,7,5,5,5,7,5,6,6,7,6,5,6,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,5,7,6,6,6,7,6,7,5,7,7,5,6,6,6,7,5,7,7,5,7,6,7,6,7,5,6,7,6,6,7,7,7,5
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,7,7,6,5,6,7,6,6,7,6,7,5,5,7,7,5,6,5,6,7,7,6,7,7,6,6,7,6,5,7,7,5,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,7,6,7,5,5,7,7,6,5,6,6,7,7,6,5,5,7,6,6,5,7,6,7,5,5,7,6,7,6,7,7,6,7,7,5
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,6,5,7,6,6,6,7,5,6,7,7,6,7,5,7,7,5,6,6,6,7,7,6,5,5,7,7,6,6,7,6,5,6,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,7,6,5,7,6,7,5,7,6,7,7,7,6,5,6,7,7,6,7,7,6,7,6,6,7,7,6,5,7,7,5,7,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,7,6,7,5,6,6,7,6,5,7,7,7,5,7,6,5,7,6,7,5,7,7,6,7,6,6,7,6,5,6
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,6,7,5,5,7,6,7,5,7,6,7,6,6,7,7,6,6,5,7,6,7,7,6,5,5,7,7,7,6,7,6,5,6,6
+2 = 50–249,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,7,6,7,6,6,7,7,6,6,5,7,6,7,6,7,7,6,5,6,6,6,5,7,7,7,6,5,6,5,5,6,7,6,5
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,6,7,7,5,6,7,6,5,7,7,6,6,6,5,6,7,7,6,5,5,6,7,6,5,6,7,7,7,6,7,6,7,6,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,6,7,7,6,7,5,6,6,5,7,7,6,5,6,6,7,7,6,5,7,7,6,7,5,6,7,7,6,5,7,7,5,7,6
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,7,7,6,6,7,5,7,7,6,7,7,7,6,5,6,6,7,6,6,5,5,7,6,7,7,7,7,5,6,5,6,7,6,7,5
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,7,6,7,5,6,7,6,5,7,5,7,7,6,7,6,7,6,7,6,7,7,6,5,6,6,7,7,6,6,7,7,6,7,5
+2 = 50–249,1 = <5,"Logistics & Supply Chain (e.g., transportation, warehousing, distribution)",3 = Mixed,7,6,7,5,6,7,7,7,7,5,5,7,6,6,7,7,6,5,6,5,5,7,6,7,6,7,7,7,5,6,6,7,6,7,5
+3 = 250–999,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,7,6,5,6,6,7,7,6,5,6,7,5,5,6,7,7,6,5,7,7,6,7,6,5,6,7,6,7,7,7,7,7,6,7
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,7,6,7,5,6,7,7,6,5,7,7,6,7,6,7,7,5,7,6,7,7,6,5,6,6,7,7,6,7,7,6,7,6,6
+2 = 50–249,1 = <5,"Logistics & Supply Chain (e.g., transportation, warehousing, distribution)","1 = Private,",7,6,7,7,6,5,6,7,6,7,7,7,6,7,5,5,7,6,7,5,6,7,7,7,5,7,7,6,7,6,7,7,5,7,7
+2 = 50–249,1 = <5,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,6,7,6,5,7,7,6,5,7,7,7,7,5,5,7,7,6,5,7,7,7,5,7,6,5,7,6,6,7,7,6,5,6
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",7,7,6,7,6,7,7,6,7,5,6,7,7,6,5,7,7,7,7,6,6,7,7,7,6,7,6,6,6,7,6,7,7,6,7
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,3 = Mixed,7,7,7,6,5,5,6,7,6,7,7,7,6,7,6,6,7,6,7,6,7,7,6,7,6,5,6,7,6,7,7,7,7,5,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,7,7,6,5,7,6,7,6,6,6,5,7,6,5,7,7,6,6,5,7,6,7,7,5,7,7,7,6,7,6,7,6,7,5,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,6,7,5,6,6,7,7,6,7,7,6,7,6,5,7,6,7,6,5,5,7,7,6,7,7,7,6,7,5,6,7,6,7,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,,7,6,7,5,7,6,7,5,7,6,7,6,7,5,7,7,5,6,5,7,7,6,7,5,6,7,7,6,5,7,7,6,7,5
+1 = <50,2 = 5–10,Agriculture & Food Processing,3 = Mixed,7,7,6,5,7,7,7,6,7,5,7,7,5,7,6,6,7,7,6,7,7,7,5,6,6,7,7,6,7,6,6,7,6,5,7
+2 = 50–249,3 = 11–20,Agriculture & Food Processing,"1 = Private,",7,7,6,7,5,7,7,5,7,6,6,7,6,5,7,7,7,7,5,6,6,7,7,5,6,6,6,7,6,5,7,5,6,7,6
+2 = 50–249,1 = <5,Agriculture & Food Processing,"2 = Public/Listed,",5,7,6,7,6,6,5,7,6,7,6,6,7,6,7,5,5,7,6,7,6,6,7,6,7,5,7,6,7,6,7,7,6,7,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,6,7,6,7,7,6,7,5,7,6,7,7,6,7,5,6,6,7,6,7,6,7,5,6,7,5,7,6,7,6,5,7,6,7,6
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,7,6,7,7,6,7,5,7,6,7,6,7,5,7,6,6,7,5,7,6,7,6,7,7,5,7,6,7,5,7,7,6,7,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,7,6,7,7,5,7,6,7,6,5,7,5,7,6,7,5,7,6,6,7,6,7,5,7,6,6,7,6,7,5,5,7,6,7
+3 = 250–999,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,5,7,6,7,6,6,7,5,7,6,7,5,7,5,7,7,6,7,5,7,6,7,5,7,6,6,7,6,7,5,5,7,6,7
+1 = <50,1 = <5,Agriculture & Food Processing,"1 = Private,",6,7,7,6,7,5,7,6,7,6,5,7,6,7,7,5,7,6,7,5,6,6,7,6,7,5,7,6,7,6,5,7,6,7,5
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",6,6,7,6,7,6,7,5,7,6,7,7,6,7,5,7,6,7,6,6,5,7,6,7,5,7,6,7,6,6,7,6,7,5,7
+3 = 250–999,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,7,6,5,7,6,7,5,7,6,7,7,6,7,5,7,6,7,7,6,7,5,7,6,7,5,7,6,6,7,5,7
+2 = 50–249,1 = <5,Agriculture & Food Processing,3 = Mixed,6,7,6,7,5,7,5,7,6,6,7,5,7,6,6,7,6,7,5,7,6,6,7,6,7,5,7,6,7,5,7,7,6,7,5
+3 = 250–999,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,7,5,7,5,6,5,7,6,7,6,5,7,6,7,5,6,5,7,7,5,7,6,5,7,6,6,7,6,7,5,7,6,7,5
+2 = 50–249,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)",3 = Mixed,5,7,6,7,7,6,7,6,7,7,5,7,6,7,5,7,6,7,6,6,7,6,7,6,6,7,5,7,5,5,7,6,7,5,7
+3 = 250–999,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",7,5,7,6,7,6,7,6,7,7,5,6,5,5,7,6,7,6,7,7,5,7,6,7,6,6,7,6,7,5,7,6,7,5,7
+1 = <50,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,6,7,6,7,7,6,7,6,6,7,5,7,6,6,6,7,5,6,5,7,6,7,6,7,7,6,7,5,7,6,7,6,6
+3 = 250–999,2 = 5–10,Agriculture & Food Processing,"2 = Public/Listed,",7,7,6,7,6,5,7,6,7,6,7,6,7,6,6,7,5,7,6,7,6,6,5,7,6,7,5,7,6,7,5,7,6,7,6
+3 = 250–999,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,6,5,7,6,7,6,6,7,6,7,5,7,6,7,5,6,6,7,5,7,6,6,7,5,7,6,6,7,5,7,6,7,5,7,6
+3 = 250–999,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,5,7,6,7,5,7,6,7,6,7,6,7,7,5,7,6,7,5,6,7,6,7,5,7,6,7,5,7,6,7,6,7,5
+1 = <50,3 = 11–20,"Manufacturing (e.g., automotive, electronics, consumer goods)","1 = Private,",6,7,5,7,6,7,7,5,7,6,7,7,6,7,5,7,6,7,6,5,7,5,7,6,7,6,7,6,7,7,5,7,6,7,6
+3 = 250–999,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",7,7,6,7,5,7,6,7,6,5,7,7,6,7,5,7,6,7,5,7,6,6,7,5,7,6,6,5,7,6,7,7,5,7,6
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,5,7,6,7,6,5,5,7,6,7,5,7,6,7,6,5,5,7,6,7,6,6,7,6,5,7,6,7,6,6,5,7,6,7,5
+1 = <50,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",5,7,7,6,7,6,5,7,6,7,5,7,6,5,7,6,6,7,5,7,6,6,7,6,7,5,7,6,7,6,7,7,6,7,5
+3 = 250–999,2 = 5–10,"Technology & Digital Services (e.g., software, IT services, fintech)","1 = Private,",6,5,7,6,7,5,7,6,7,5,5,7,6,7,5,7,6,7,6,7,6,6,7,6,7,5,7,6,7,6,5,7,5,6,5
+3 = 250–999,2 = 5–10,"Manufacturing (e.g., automotive, electronics, consumer goods)","2 = Public/Listed,",6,7,6,7,7,6,7,6,7,5,6,7,6,7,7,5,7,6,7,5,7,7,6,7,5,7,6,7,6,6,7,5,7,6,6
+1 = <50,3 = 11–20,"Technology & Digital Services (e.g., software, IT services, fintech)",3 = Mixed,5,7,6,7,5,7,7,6,7,5,7,6,7,6,7,6,6,5,7,7,6,7,5,7,6,7,5,7,6,7,6,7,6,7,5
+3 = 250–999,2 = 5–10,Agriculture & Food Processing,"1 = Private,",6,7,7,6,7,6,5,7,6,7,5,5,7,6,7,6,5,7,6,7,5,6,5,7,6,7,7,6,7,6,7,5,7,6,7
+2 = 50–249,1 = <5,"Technology & Digital Services (e.g., software, IT services, fintech)","2 = Public/Listed,",6,7,6,7,7,5,7,6,7,6,7,7,5,7,6,6,7,6,7,5,6,7,6,7,7,6,7,6,7,5,7,7,6,7,5

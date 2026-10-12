@@ -29,6 +29,7 @@ rows = [["Statistical Analysis II - UTS 2026/2027 - Workbook"], ["Student ID (NP
         ["World Bank WDI", "same pattern, indicator NE.EXP.GNFS.CD", "NE.EXP.GNFS.CD", "current US$ (shown in US$ bn)", "1986-2025"],
         ["World Bank WDI", "same pattern, indicators NE.EXP.GNFS.ZS, EG.USE.ELEC.KH.PC (context, Q8)", "NE.EXP.GNFS.ZS; EG.USE.ELEC.KH.PC", "% GDP; kWh/capita", "to 2025 / 2024"],
         ["ILOSTAT SDMX", "https://sdmx.ilo.org/rest/data/ILO,DF_UNE_TUNE_SEX_AGE_NB/VNM+PHL+IND....?format=csv&startPeriod=2015", "UNE_TUNE_NB (age 15+)", "thousand persons (UNIT_MULT=3)", "2024"],
+        ["Zenodo (Q7)", "https://zenodo.org/records/22057938 (CC-BY 4.0, file DATAUPDATE.csv) and https://zenodo.org/records/20439760", "SCR1-SCR6; OR1-OR5", "Likert", "2025-26"],
         ["ILOSTAT SDMX", "https://sdmx.ilo.org/rest/data/ILO,DF_EMP_TEMP_SEX_ECO_NB/VNM+PHL+IND....?format=csv&startPeriod=2015", "EMP_TEMP_NB by ECO_SECTOR_*", "thousand persons", "2024"],
         [], ["Sheets: Raw_* = downloaded data as received; Q1..Q6 = transformations/tests (Q1-Q3 contain live Excel formulas); Q7 = protocol (no data collected); Results = all statistics from analysis.py."],
         ["ILO figures are weighted labour-force-survey estimates (thousands), NOT raw respondent counts - see report Q2/Q3 caveat."]]
@@ -81,7 +82,25 @@ chi_sheet("Q2", ["Viet Nam", "Philippines"], ["Unemployed", "Employed"], R["Q2"]
 chi_sheet("Q3", ["Viet Nam", "Philippines"], ["Agriculture", "Industry", "Services"], R["Q3"]["observed"], "Viet Nam: 3,845,332 workers 'not classified' (ECO_SECTOR_X) excluded; 2x4 robustness in Results sheet.")
 # Q4-Q6 data
 sheet("Q4_panel", pd.read_csv(TAB / "Q4_panel.csv")); sheet("Q5_data", pd.read_csv(TAB / "Q5_data.csv")); sheet("Q6_series", pd.read_csv(TAB / "Q6_series.csv")); sheet("Q6_holdout", pd.read_csv(TAB / "Q6_holdout.csv"))
-ws = wb.create_sheet("Q7"); [ws.append([x]) for x in ["Q7: no item-level survey data collected or downloaded. See report Section 7 for six items, validity argument and analysis protocol; script q7_reliability.py computes corrected item-total r, odd-even Spearman-Brown and Cronbach's alpha once >=30 real responses (CSV) exist.", "NO simulated data are included."]]
+xB = pd.read_csv(TAB / "Q7_SCR_items.csv", index_col=0); n7 = len(xB)
+ws = wb.create_sheet("Q7_SCR_alpha")
+ws.append(["resp"] + list(xB.columns) + ["Total", "odd (1,3,5)", "even (2,4,6)"] + [f"Total-{c}" for c in xB.columns])
+for i, (idx, r) in enumerate(xB.iterrows(), start=2):
+    ws.append([int(idx) + 1] + [int(v) for v in r] + [f"=SUM(B{i}:G{i})", f"=B{i}+D{i}+F{i}", f"=C{i}+E{i}+G{i}"] + [f"=H{i}-{get_column_letter(2+j)}{i}" for j in range(6)])
+L = n7 + 1; r0 = L + 2
+ws.cell(r0, 1, "Variance (n-1)")
+for j in range(6): ws.cell(r0, 2 + j, f"=VAR({get_column_letter(2+j)}2:{get_column_letter(2+j)}{L})")
+ws.cell(r0, 8, f"=VAR(H2:H{L})")
+ws.cell(r0 + 1, 1, "Corrected item-total r")
+for j in range(6): ws.cell(r0 + 1, 2 + j, f"=CORREL({get_column_letter(2+j)}2:{get_column_letter(2+j)}{L},{get_column_letter(11+j)}2:{get_column_letter(11+j)}{L})")
+ws.cell(r0 + 2, 1, "Cronbach alpha"); ws.cell(r0 + 2, 2, f"=6/5*(1-SUM(B{r0}:G{r0})/H{r0})")
+ws.cell(r0 + 3, 1, "Odd-even r"); ws.cell(r0 + 3, 2, f"=CORREL(I2:I{L},J2:J{L})")
+ws.cell(r0 + 4, 1, "Spearman-Brown"); ws.cell(r0 + 4, 2, f"=2*B{r0+3}/(1+B{r0+3})")
+ws.cell(r0 + 6, 1, "Source: Zenodo 10.5281/zenodo.22057938, DATAUPDATE.csv, columns SCR1-SCR6 (real respondent data, n=248). No simulated data.")
+for c in ws[1]: c.font = bold; c.fill = fill
+sheet("Raw_Zenodo_B_all18", pd.read_csv(RAW / "zenodo_22057938_DATAUPDATE.csv", sep=";"), index=False)
+sheet("Q7_OR_items_dsA", pd.read_csv(TAB / "Q7_OR_items.csv"), index=False)
+ws = wb.create_sheet("Q7_protocol"); [ws.append([x]) for x in ["Six designed items and protocol: see report Section 7. Reliability computed on public Zenodo data (dataset B primary, dataset A comparison). q7_reliability.py reproduces the statistics from any CSV with columns item1..item6."]]
 ws.column_dimensions["A"].width = 160
 # results dump
 ws = wb.create_sheet("Results"); ws.append(["key", "value"])
