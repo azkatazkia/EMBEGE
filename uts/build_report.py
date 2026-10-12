@@ -1,4 +1,4 @@
-"""Build 120510253003_NAMA_UTS.pdf from results.json (all numbers are pulled from the analysis output)."""
+"""Build 120510253003_TsurayaInggit_UTS.pdf from results.json (all numbers are pulled from the analysis output)."""
 import json, pathlib
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -30,9 +30,9 @@ q1, q2, q3, q4, q5, q6, q8 = (R[k] for k in ("Q1", "Q2", "Q3", "Q4", "Q5", "Q6",
 # ---------------- cover
 P("UNIVERSITAS PADJADJARAN - Digital Business Study Program", ParagraphStyle("c", parent=B, fontSize=10))
 P("<b>Statistical Analysis II - Midterm Examination (UTS) 2026/2027</b>", ParagraphStyle("t", parent=B, fontSize=16, leading=20))
-P("Student: ______________ (Name) | NPM: 120510253003 | Submitted: 13 Oct 2026 | Lecturer: Dr. Vita Sarasi, S.E., M.T.")
+P("Student: Tsuraya Inggit | NPM: 120510253003 | Submitted: 13 Oct 2026 | Lecturer: Dr. Vita Sarasi, S.E., M.T.")
 P("<b>Assigned country:</b> Viet Nam (last digit of NPM d = 3, 4th country). <b>Comparison countries:</b> Philippines (2nd), India (3rd). Role: business analyst advising a multinational considering investment in Viet Nam. Significance level α = 0.05 throughout.")
-P("<b>Files:</b> this report; workbook 120510253003_NAMA_UTS.xlsx (raw downloads + transformations + live Excel formulas for Q1-Q3); reproducible code <i>fetch_wb.py, analysis.py, build_workbook.py, build_report.py, q7_reliability.py</i>; raw data in <i>data/raw/</i>. All numbers below are produced by <i>analysis.py</i> (results.json).")
+P("<b>Files:</b> this report; workbook 120510253003_TsurayaInggit_UTS.xlsx (raw downloads + transformations + live Excel formulas for Q1-Q3); reproducible code <i>fetch_wb.py, analysis.py, build_workbook.py, build_report.py, q7_reliability.py</i>; raw data in <i>data/raw/</i>. All numbers below are produced by <i>analysis.py</i> (results.json).")
 P("Summary of findings", H2)
 T([["Q", "Method", "Key result (α = 0.05)", "Decision / implication"],
  ["1", "Lilliefors, VN CPI inflation 1996-2025 (n=30)", f"D = {f(q1['D'],3)} > {f(q1['crit05'],3)}; p = {pf(q1['p_lilliefors'])} -> not normal", "Use quantiles/bootstrap; plan for inflation tail risk"],
@@ -193,9 +193,9 @@ assert 300 <= words <= 450, words
 # ---------------- AI disclosure
 P("Appendix - AI-use disclosure and verification", H1)
 P("<b>Tool.</b> An AI coding assistant (Claude Code) was used to write the Python scripts, run the analysis, build the workbook and draft this report. <b>Prompt (verbatim, translated from Indonesian):</b> 'Please do the assignment above, and I don't have the data so you find it for me' (with the exam PDF attached; follow-up: NPM 120510253003). <b>Data provenance:</b> all data were fetched by the scripts directly from the official World Bank and ILOSTAT APIs; no dataset was generated or typed by the AI. Two public Zenodo survey datasets for Q7 were located by AI-assisted web search and downloaded by script. News claims were retrieved through web search of syndicated Reuters text and IEA-based coverage because the primary pages (reuters.com, iea.org) returned access errors (401/403) to the tool.")
-P("<b>Verification steps (to be completed and signed off by the student before submission):</b> (1) re-run <i>fetch_wb.py</i> and <i>analysis.py</i> and confirm identical results; (2) spot-check at least three data values against the World Bank and ILOSTAT web pages; (3) confirm that the Excel formulas in sheets Q1-Q3 reproduce D = 0.2113 and the χ² values (they were recalculated in LibreOffice and match Python); (4) read the primary Reuters and IEA pages and confirm the two claims quoted in Q8; (5) rename files with name and NPM. Known limits: Q2 and Q3 p-values are inflated by weighted counts; Q7 uses public data from other respondents (Indonesia), not Viet Nam, and dataset B has no documented item wording.")
+P("<b>Verification steps (to be completed and signed off by the student before submission):</b> (1) re-run <i>fetch_wb.py</i> and <i>analysis.py</i> and confirm identical results; (2) spot-check at least three data values against the World Bank and ILOSTAT web pages; (3) confirm that the Excel formulas in sheets Q1-Q3 reproduce D = 0.2113 and the χ² values (they were recalculated in LibreOffice and match Python); (4) read the primary Reuters and IEA pages and confirm the two claims quoted in Q8; (5) check that the file names carry your name and NPM. Known limits: Q2 and Q3 p-values are inflated by weighted counts; Q7 uses public data from other respondents (Indonesia), not Viet Nam, and dataset B has no documented item wording.")
 
 def foot(c, d):
-    c.saveState(); c.setFont("Helvetica", 7.5); c.drawString(1.5*cm, 1*cm, "Statistical Analysis II - UTS 2026/2027 - NPM 120510253003 - Viet Nam"); c.drawRightString(A4[0] - 1.5*cm, 1*cm, f"Page {d.page}"); c.restoreState()
-SimpleDocTemplate(str(H / "120510253003_NAMA_UTS.pdf"), pagesize=A4, leftMargin=1.6*cm, rightMargin=1.6*cm, topMargin=1.5*cm, bottomMargin=1.6*cm, title="UTS Statistical Analysis II - Viet Nam").build(S, onFirstPage=foot, onLaterPages=foot)
+    c.saveState(); c.setFont("Helvetica", 7.5); c.drawString(1.5*cm, 1*cm, "Statistical Analysis II - UTS 2026/2027 - Tsuraya Inggit - NPM 120510253003 - Viet Nam"); c.drawRightString(A4[0] - 1.5*cm, 1*cm, f"Page {d.page}"); c.restoreState()
+SimpleDocTemplate(str(H / "120510253003_TsurayaInggit_UTS.pdf"), pagesize=A4, leftMargin=1.6*cm, rightMargin=1.6*cm, topMargin=1.5*cm, bottomMargin=1.6*cm, title="UTS Statistical Analysis II - Viet Nam").build(S, onFirstPage=foot, onLaterPages=foot)
 print("ok, memo words:", words)
