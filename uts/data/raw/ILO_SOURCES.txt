@@ -1,0 +1,3 @@
+https://sdmx.ilo.org/rest/data/ILO,DF_EAP_TEAP_SEX_AGE_NB/VNM+PHL+IND....?format=csv&startPeriod=2015  extracted 2026-10-12
+https://sdmx.ilo.org/rest/data/ILO,DF_UNE_TUNE_SEX_AGE_NB/VNM+PHL+IND....?format=csv&startPeriod=2015  extracted 2026-10-12
+https://sdmx.ilo.org/rest/data/ILO,DF_EMP_TEMP_SEX_ECO_NB/VNM+PHL+IND....?format=csv&startPeriod=2015  extracted 2026-10-12
